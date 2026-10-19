@@ -27,7 +27,6 @@ export default function Footer() {
   return (
     <footer className="footer" ref={ref}>
       <div className="container footer-cta">
-        <p className="kicker kicker-inv">Contact</p>
         <SplitHeading lines={['What are you', 'trying to make?']} className="display" italicLines={[1]} />
         <div className="footer-cta-row">
           <a className="footer-mail has-roll" href={`mailto:${site.email}`}>

@@ -11,10 +11,7 @@ export default function AboutIntro() {
       <section className="page-hero about-hero">
         <div className="container about-hero-layout">
           <div className="about-hero-main">
-            <div className="ph-top">
-              <Reveal y={12}><p className="kicker">About / Reflexo Solutions</p></Reveal>
-              <span className="ph-index">(01)</span>
-            </div>
+           
             <SplitHeading
               as="h1"
               lines={['We ask first.', 'Then we make.']}
@@ -65,7 +62,6 @@ export default function AboutIntro() {
       <section className="about-process" aria-labelledby="about-process-title">
         <div className="container about-process-layout">
           <div className="about-process-heading">
-            <p className="kicker kicker-inv">How a project moves</p>
             <h2 id="about-process-title" className="h2">You see the work as it takes shape.</h2>
             <p>Clear decisions, visible progress, and a next step you can always point to.</p>
           </div>

@@ -14,7 +14,6 @@ export default function Values() {
     <section className="section">
       <div className="container about-values">
         <div className="about-values-heading">
-          <p className="kicker">The studio standard</p>
           <SplitHeading lines={['Small by design.', 'Serious about craft.']} italicLines={[1]} className="h2" />
           <p className="muted">A few principles shape every decision we make and every partnership we take on.</p>
         </div>

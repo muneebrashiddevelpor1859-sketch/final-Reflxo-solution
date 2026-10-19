@@ -40,7 +40,6 @@ export default function Statement() {
     <section className="section statement">
       <div className="container statement-grid">
         <div className="statement-copy">
-          <p className="kicker">01 / A little about our approach</p>
           <ScrollText className="statement-text" text="Good digital work starts with the problem, not the platform." />
           <p className="statement-support">
             First we get clear on what needs to change. Then we build what helps.

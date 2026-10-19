@@ -17,7 +17,6 @@ export default function Faq() {
     <section className="section faq">
       <div className="container faq-grid">
         <div>
-          <p className="kicker">06 / Questions</p>
           <SplitHeading lines={['A few things people', 'usually ask.']} italicLines={[1]} className="h2" />
         </div>
         <ul className="faq-list">

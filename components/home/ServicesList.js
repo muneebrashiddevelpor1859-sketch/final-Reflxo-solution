@@ -30,7 +30,6 @@ export default function ServicesList() {
       <div className="container">
         <div className="svx-head">
           <div>
-            <p className="kicker">02 / Capabilities</p>
             <SplitHeading lines={['What we do.']} className="h2 svx-title" />
           </div>
           <div className="svx-intro">

@@ -53,7 +53,7 @@ export default function Hero() {
   return (
     <>
       <section className="hero hero-lens">
-        <div className="container hero-top">
+        {/* <div className="container hero-top">
           <motion.p className="hero-meta" {...rise(0.1)}>
             <span className="hero-meta-dot" aria-hidden="true" /> Independent digital agency
           </motion.p>
@@ -61,7 +61,7 @@ export default function Hero() {
           <motion.p className="hero-meta hero-meta-end" {...rise(0.3)}>
             {time && <>Studio time <b>{time}</b></>}
           </motion.p>
-        </div>
+        </div> */}
 
         <div className="container hero-main hero-main-lens">
           <motion.h1

@@ -7,7 +7,7 @@ export default function StackBand() {
     <section className="section stackband">
       <div className="container">
         <Reveal>
-          <p className="kicker">Our working toolkit</p>
+          {/* <p className="kicker">Our working toolkit</p> */}
           <h2 className="h2">The tools we trust</h2>
         </Reveal>
         <Reveal delay={0.15}>

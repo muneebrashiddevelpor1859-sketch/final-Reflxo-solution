@@ -47,7 +47,6 @@ export default function WorkScroll() {
       <div className="reel-stick">
         <div className="container reel-head">
           <div>
-            <p className="kicker">03 / A few recent projects</p>
             <h2 id="selected-work-title" className="h2">Selected work</h2>
           </div>
           <Button href="/portfolio" variant="line" magnetic={false}>View all work</Button>

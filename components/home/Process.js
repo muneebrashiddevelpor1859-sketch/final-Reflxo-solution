@@ -26,7 +26,6 @@ export default function Process() {
     <section className="section process">
       <div className="container process-grid">
         <div className="process-intro">
-          <p className="kicker">05 / A clear way forward</p>
           <SplitHeading lines={['How a project', 'unfolds']} italicLines={[1]} className="h2" />
           <p className="muted">One focused team, a shared plan, and no surprises between the first conversation and launch.</p>
         </div>
