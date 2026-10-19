@@ -1,0 +1,55 @@
+// group: used by the navbar dropdown columns
+export const services = [
+  {
+    slug: 'web-development',
+    group: 'Build & Design',
+    image: '/images/services/web-development.svg',
+    title: 'Web Development',
+    short: 'Fast, modern websites and web apps built to turn visitors into customers.',
+    long: 'Your website is where attention turns into customers or gets wasted. We design and build custom websites and web apps with clear positioning, quick load times, smooth user journeys and a search-ready structure, so your brand looks sharp and your business keeps growing online.',
+    features: ['Custom Next.js and React websites', 'Responsive, conversion-focused UI', 'Admin dashboards and secure APIs', 'Speed, SEO and hosting setup'],
+    stack: ['Next.js', 'React', 'Node.js', 'Express', 'PostgreSQL', 'Figma'],
+  },
+  {
+    slug: 'graphic-design',
+    group: 'Build & Design',
+    image: '/images/services/graphic-design.svg',
+    title: 'Graphic Design',
+    short: 'Logos, branding and creatives that make your business look unforgettable.',
+    long: 'A strong visual identity builds trust before you say a word. We craft logos, brand guidelines and marketing creatives that look consistent everywhere, from your website and social media to your brochures and pitch decks.',
+    features: ['Logo and brand identity', 'Brand guidelines and style kits', 'Social media and ad creatives', 'Pitch decks, brochures and print'],
+    stack: ['Figma', 'Illustrator', 'Photoshop', 'After Effects'],
+  },
+  {
+    slug: 'software-development',
+    group: 'Build & Design',
+    image: '/images/services/software-development.svg',
+    title: 'Software Development',
+    short: 'Custom software, portals and internal tools shaped around how you work.',
+    long: 'When off-the-shelf tools stop fitting, we build software that does. From CRMs and customer portals to internal dashboards and mobile-ready apps, we deliver reliable, secure and scalable systems that save time and remove manual work.',
+    features: ['Custom CRM, ERP and portals', 'Internal tools and dashboards', 'API and third-party integrations', 'Maintenance and ongoing support'],
+    stack: ['Node.js', 'React', 'PostgreSQL', 'MongoDB', 'Docker', 'REST APIs'],
+  },
+  {
+    slug: 'ai-automation',
+    group: 'AI Solutions',
+    image: '/images/services/ai-automation.svg',
+    title: 'AI Automation',
+    short: 'Automate repetitive work so leads, follow-ups and tasks never slip through.',
+    long: 'We connect your forms, emails, chats, calendars and CRM so every enquiry is captured, answered fast and followed up automatically. Less manual work, fewer missed opportunities, and your team free to focus on what really matters.',
+    features: ['Lead capture and instant replies', 'CRM and calendar workflows', 'Reminders, reports and notifications', 'Custom AI-powered business tools'],
+    stack: ['n8n', 'Zapier', 'OpenAI API', 'WhatsApp API', 'Node.js'],
+  },
+  {
+    slug: 'ai-agents',
+    group: 'AI Solutions',
+    image: '/images/services/ai-agents.svg',
+    title: 'AI Agents',
+    short: 'Smart chat and voice assistants that handle real conversations 24/7.',
+    long: 'Trained on your own services, pricing and policies, our AI agents answer questions, qualify enquiries, book appointments and hand over to your team with full context, on your website, WhatsApp or by phone, day and night.',
+    features: ['Website and WhatsApp chat agents', 'Voice AI receptionists', 'Knowledge trained on your business', 'Smart handover to your team'],
+    stack: ['OpenAI', 'Claude', 'LangChain', 'Vapi', 'Node.js'],
+  },
+];
+
+export const groups = ['Build & Design', 'AI Solutions'];
