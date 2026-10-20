@@ -171,7 +171,7 @@ a:hover .crop::after, .crop:hover::after { inset: -2px; --c: var(--signal); }
 .header-inner { position: relative; display: flex; align-items: stretch; justify-content: space-between; height: var(--header-h); max-width: 1560px; margin-inline: auto; padding-inline: var(--pad); }
 .logo { display: flex; align-items: center; gap: 0.7rem; }
 .logo-mark { position: relative; display: grid; place-items: center; width: 36px; height: 36px; background: var(--ink); color: var(--bone); font-family: var(--display); font-weight: 700; font-size: 0.927rem; transition: background 0.3s, color 0.3s, transform 0.5s var(--ease); }
-.logo-mark::after { content: ''; position: absolute; right: -4px; bottom: -4px; width: 9px; height: 9px; background: var(--signal); }
+.logo-mark::after { content: ''; position: absolute; right: -4px; bottom: -4px; width: 9px; height: 9px;  }
 .logo:hover .logo-mark { transform: rotate(-8deg); background: var(--signal); color: var(--ink); }
 .logo-text { font-size: 1.016rem; letter-spacing: -0.03em; line-height: 1; }
 .logo-text small { display: block; margin-top: 3px; font-family: var(--body); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted); }
