@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import Button from '../ui/Button';
 import { SLIDES } from './HeroIris';
+import { stats } from '@/data/site';
 import './hero.css';
 
-// ---- VIDEOS: yahan se video badlein (file ko /public/videos/ mein rakhein) ----
 const HERO_VIDEO = '/videos/hero-office.mp4'; // hero ke peeche wali video
 const REEL_VIDEO = 'https://assets.mixkit.co/videos/46680/46680-720.mp4'; // hero ke neeche wali (scroll par khulne wali) video (Mixkit link)
 const REEL_FALLBACK = '/videos/reel-office.mp4'; // Mixkit link na chale to ye chalegi
@@ -121,7 +121,8 @@ export default function Hero() {
         <div className="hx-dots" aria-hidden="true" />
 
         <motion.div className="hx-inner" style={{ y: copyY, opacity: copyOpacity }}>
-        
+         
+
           <div className="container hx-main">
             <div className="hx-copy">
              
@@ -193,6 +194,42 @@ export default function Hero() {
   );
 }
 
+
+const REEL_CHIPS = ['Strategy', 'Digital experiences', 'Brand systems', 'AI & automation', 'E-commerce', 'Growth'];
+
+// One line of the reel headline: rises out of a mask (and un-blurs) at its point in the scroll.
+function ReelLine({ progress, from, children, className = '' }) {
+  const y = useTransform(progress, [from, from + 0.1], ['110%', '0%']);
+  const o = useTransform(progress, [from, from + 0.07], [0, 1]);
+  const f = useTransform(progress, [from, from + 0.1], [10, 0]);
+  const blur = useMotionTemplate`blur(${f}px)`;
+  return (
+    <span className="hx-rc-line">
+      <motion.span className={className} style={{ y, opacity: o, filter: blur }}>{children}</motion.span>
+    </span>
+  );
+}
+
+// Any block that fades and slides up at its point in the scroll.
+function ReelIn({ progress, from, children, className = '', as = 'div' }) {
+  const Tag = motion[as];
+  const y = useTransform(progress, [from, from + 0.1], [26, 0]);
+  const o = useTransform(progress, [from, from + 0.08], [0, 1]);
+  return <Tag className={className} style={{ y, opacity: o }}>{children}</Tag>;
+}
+
+// Numbers count up while you scroll.
+function ReelStat({ progress, from, s }) {
+  const n = useTransform(progress, [from + 0.02, from + 0.16], [0, s.value]);
+  const r = useTransform(n, (v) => Math.round(v));
+  return (
+    <ReelIn progress={progress} from={from} className="hx-rc-stat">
+      <b><motion.span>{r}</motion.span>{s.suffix}</b>
+      <span>{s.label}</span>
+    </ReelIn>
+  );
+}
+
 // The video starts as a small rounded window and opens to the full screen while you scroll through.
 function HeroReel() {
   const ref = useRef(null);
@@ -201,16 +238,19 @@ function HeroReel() {
   useVideoInView(videoRef);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
 
-  const inset = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const inset = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
   const top = useTransform(inset, (v) => `${v * 12}%`);
   const side = useTransform(inset, (v) => `${v * 22}%`);
   const round = useTransform(inset, (v) => `${v * 26}px`);
   const clip = useMotionTemplate`inset(${top} ${side} ${top} ${side} round ${round})`;
-  const zoom = useTransform(scrollYProgress, [0, 0.6], [1.25, 1]);
-  const hud = useTransform(scrollYProgress, [0.42, 0.62], [0, 1]);
+  const zoom = useTransform(scrollYProgress, [0, 0.45], [1.25, 1]);
+  const hud = useTransform(scrollYProgress, [0.32, 0.46], [0, 1]);
   const cue = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
   const outline = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
   const bar = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const veil = useTransform(scrollYProgress, [0.42, 0.62], [0, 1]);
+  const live = useTransform(scrollYProgress, (v) => (v > 0.52 ? 'auto' : 'none'));
+  const pushUp = useTransform(scrollYProgress, [0.9, 1], [0, -30]);
 
   // running timecode in the corner of the frame (updates a text node directly, no re-renders)
   useEffect(() => {
@@ -258,6 +298,36 @@ function HeroReel() {
           </motion.div>
           <div className="hx-reel-shade" aria-hidden="true" />
           <div className="hx-reel-tint" aria-hidden="true" />
+
+
+          {/* agency content that appears once the video is full screen */}
+          <motion.div className="hx-reel-veil" style={{ opacity: veil }} aria-hidden="true" />
+          <motion.div className="hx-reel-copy container" style={{ pointerEvents: live, y: pushUp }}>
+          
+            <h2 className="hx-rc-title" aria-label="Make the next move matter.">
+              <ReelLine progress={scrollYProgress} from={0.52}>Make the next</ReelLine>
+              <ReelLine progress={scrollYProgress} from={0.58} className="is-grad">move matter.</ReelLine>
+            </h2>
+            <ReelIn progress={scrollYProgress} from={0.64} as="p" className="hx-rc-text">
+              Brand, web and AI, connected into one clear digital direction for your business.
+            </ReelIn>
+            <ul className="hx-rc-chips" aria-label="Capabilities">
+              {REEL_CHIPS.map((c, i) => (
+                <li key={c}>
+                  <ReelIn progress={scrollYProgress} from={0.67 + i * 0.012} as="span">{c}</ReelIn>
+                </li>
+              ))}
+            </ul>
+            <ReelIn progress={scrollYProgress} from={0.72} className="hx-rc-actions">
+              <Button href="/services" variant="signal">Explore all services</Button>
+              <Button href="/portfolio" variant="line">See selected work</Button>
+            </ReelIn>
+            <div className="hx-rc-stats">
+              {stats.map((s, i) => (
+                <ReelStat key={s.label} progress={scrollYProgress} from={0.74 + i * 0.03} s={s} />
+              ))}
+            </div>
+          </motion.div>
 
           <motion.div className="hx-reel-hud" style={{ opacity: hud }} aria-hidden="true">
             <span className="hud-rec"><i /> REC</span>
