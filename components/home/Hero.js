@@ -7,12 +7,11 @@ import { SLIDES } from './HeroIris';
 import { stats } from '@/data/site';
 import './hero.css';
 
-const HERO_VIDEO = 'videos/5725949-uhd_3840_2160_30fps.mp4'; // hero ke peeche wali video
+const HERO_VIDEO = 'videos/5725949-uhd_3840_2160_30fps.mp4'; 
 const REEL_VIDEO = 'videos/5725951-uhd_3840_2160_30fps.mp4'; // hero ke neeche wali (scroll par khulne wali) video (Mixkit link)
 const REEL_FALLBACK = '/videos/reel-office.mp4'; // Mixkit link na chale to ye chalegi
 const REEL_POSTER = '/videos/hero-poster.jpg'; // video load hone tak dikhne wali tasveer
-const REEL_START = 0; // reel video kitne second se shuru ho
-
+const REEL_START = 0; 
 const lines = [
   { text: 'Make your', cls: '' },
   { text: 'next move', cls: 'is-grad' },
