@@ -12,8 +12,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        kicker="Contact"
-        index="(05)"
+       
         lines={["Let's talk about", 'your project.']}
         italicLines={[1]}
         text="Fill in the form and it lands straight in our inbox. Prefer chat? Use the button at the bottom right."
