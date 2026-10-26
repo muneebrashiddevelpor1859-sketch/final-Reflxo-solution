@@ -84,9 +84,9 @@ export default function SxRadar({ labels = [] }) {
     <svg ref={svgRef} className="sx-radar" viewBox="0 0 400 400" role="img" aria-label="Reflexo capabilities radar">
       <defs>
         <linearGradient id="sx-radar-g" gradientUnits="userSpaceOnUse" x1="60" y1="60" x2="340" y2="340">
-          <stop offset="0" stopColor="#10100E" />
-          <stop offset="0.6" stopColor="#10100E" />
-          <stop offset="1" stopColor="#FF4A1C" />
+          <stop offset="0" stopColor="#0d0b33" />
+          <stop offset="0.6" stopColor="#0d0b33" />
+          <stop offset="1" stopColor="#ff3d9a" />
         </linearGradient>
         <path id="sx-radar-ring" d="M 200 200 m -170 0 a 170 170 0 1 1 340 0 a 170 170 0 1 1 -340 0" />
       </defs>
@@ -100,7 +100,7 @@ export default function SxRadar({ labels = [] }) {
           <line key={i} ref={(el) => { spokes.current[i] = el; }} x1={CX} y1={CY} x2={CX} y2={CY} />
         ))}
       </g>
-      <circle cx={CX} cy={CY} r="56" fill="#FF4A1C" />
+      <circle cx={CX} cy={CY} r="56" fill="#ff3d9a" />
       <text x={CX} y={CY + 6} textAnchor="middle" className="sx-radar-count">{labels.length}</text>
       <text x={CX} y={CY + 30} textAnchor="middle" className="sx-radar-sub">capabilities</text>
     </svg>

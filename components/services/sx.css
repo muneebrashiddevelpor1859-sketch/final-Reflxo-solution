@@ -37,14 +37,14 @@
 /* ----- expanding panels ----- */
 .sx-panels-section { padding-bottom: clamp(4.5rem, 9vw, 8rem); }
 .sx-panels { display: flex; height: clamp(540px, 76vh, 700px); border: 1px solid var(--ink); background: var(--ink); }
-.sx-panel { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; color: var(--on-ink); border-left: 1px solid rgba(237, 233, 224, 0.22); transition: flex-grow 0.8s var(--ease-io); }
+.sx-panel { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; color: var(--on-ink); border-left: 1px solid rgba(238, 236, 247, 0.22); transition: flex-grow 0.8s var(--ease-io); }
 .sx-panel:first-child { border-left: 0; }
 .sx-panel.is-active { flex-grow: 6.5; }
 .sx-panel-art { position: absolute; inset: 0; overflow: hidden; }
 .sx-panel-artwrap { position: absolute; inset: -6%; }
 .sx-panel-art .photo img { filter: grayscale(1); opacity: 0.45; transition: opacity 0.8s, filter 0.8s; }
 .sx-panel.is-active .sx-panel-art .photo img { opacity: 1; filter: none; }
-.sx-panel-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16, 16, 14, 0.15) 30%, rgba(16, 16, 14, 0.92)); opacity: 0; transition: opacity 0.6s; }
+.sx-panel-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 11, 51, 0.15) 30%, rgba(13, 11, 51, 0.92)); opacity: 0; transition: opacity 0.6s; }
 .sx-panel.is-active .sx-panel-shade { opacity: 1; }
 .sx-panel-closed { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.6rem 0; transition: opacity 0.35s; }
 .sx-panel.is-active .sx-panel-closed { opacity: 0; pointer-events: none; }
@@ -57,9 +57,9 @@
 .sx-panel.is-active .sx-panel-open { opacity: 1; transform: none; transition-delay: 0.3s; pointer-events: auto; }
 .sx-panel-group { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--signal); }
 .sx-panel-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.248rem, 2.496vw, 2.371rem); line-height: 0.98; letter-spacing: -0.05em; }
-.sx-panel-short { max-width: 44ch; color: rgba(237, 233, 224, 0.8); }
+.sx-panel-short { max-width: 44ch; color: rgba(238, 236, 247, 0.8); }
 .sx-panel-feats { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.sx-panel-feats li { border: 1px solid rgba(237, 233, 224, 0.3); padding: 0.3rem 0.7rem; font-size: 0.688rem; font-weight: 600; }
+.sx-panel-feats li { border: 1px solid rgba(238, 236, 247, 0.3); padding: 0.3rem 0.7rem; font-size: 0.688rem; font-weight: 600; }
 .sx-panel-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.4rem; }
 .sx-pill { padding: 0.85rem 1.3rem; font-size: 0.688rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid var(--bone); transition: background 0.3s, color 0.3s, border-color 0.3s; }
 .sx-pill-solid { background: var(--bone); color: var(--ink); }
@@ -86,7 +86,7 @@
 /* ----- cta ----- */
 .sx-cta-section { padding-block: clamp(4rem, 8vw, 7rem); }
 .sx-cta { position: relative; overflow: hidden; padding: clamp(2rem, 6vw, 5.5rem); background: var(--ink); color: var(--on-ink); --mx: 50%; --my: 50%; }
-.sx-cta-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(360px circle at var(--mx) var(--my), rgba(255, 74, 28, 0.3), transparent 65%); }
+.sx-cta-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(360px circle at var(--mx) var(--my), rgba(255, 61, 154, 0.3), transparent 65%); }
 .sx-cta-title { position: relative; font-family: var(--display); font-weight: 600; font-size: clamp(1.385rem, 4.04vw, 4.04rem); line-height: 0.95; letter-spacing: -0.055em; max-width: 12ch; }
 .sx-cta-text { position: relative; margin-top: 1.6rem; max-width: 44ch; color: var(--on-ink-muted); font-size: 0.972rem; }
 .sx-cta-row { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem 2.5rem; margin-top: 2.4rem; }
@@ -172,7 +172,7 @@
 }
 @media (max-width: 860px) {
   .sx-panels { flex-direction: column; height: auto; }
-  .sx-panel { flex: none; height: 84px; border-left: 0; border-top: 1px solid rgba(237, 233, 224, 0.22); transition: height 0.7s var(--ease-io); }
+  .sx-panel { flex: none; height: 84px; border-left: 0; border-top: 1px solid rgba(238, 236, 247, 0.22); transition: height 0.7s var(--ease-io); }
   .sx-panel:first-child { border-top: 0; }
   .sx-panel.is-active { height: 600px; }
   .sx-panel-closed { flex-direction: row; padding: 0 1.2rem; }

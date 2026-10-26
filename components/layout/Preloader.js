@@ -34,16 +34,35 @@ export default function Preloader() {
   }, []);
 
   const ease = [0.76, 0, 0.24, 1];
+  const open = Math.max(0.04, count / 100);
 
   return (
     <AnimatePresence>
       {show && (
-        <motion.div className="preloader" exit={{ pointerEvents: 'none' }} transition={{ duration: 1 }}>
-          <motion.div className="pre-blade pre-blade-top" exit={{ y: '-100%' }} transition={{ duration: 0.95, ease }} />
-          <motion.div className="pre-blade pre-blade-bottom" exit={{ y: '100%' }} transition={{ duration: 0.95, ease }} />
+        <motion.div
+          className="preloader"
+          initial={{ clipPath: 'circle(150% at 50% 50%)' }}
+          animate={{ clipPath: 'circle(150% at 50% 50%)' }}
+          exit={{ clipPath: 'circle(0% at 50% 50%)', pointerEvents: 'none' }}
+          transition={{ duration: 1.1, ease }}
+        >
+          <div className="pre-blade pre-blade-top" />
+          <div className="pre-blade pre-blade-bottom" />
 
-          <motion.div className="preloader-inner" exit={{ opacity: 0, scale: 1.08 }} transition={{ duration: 0.45 }}>
+          <motion.div className="preloader-inner" exit={{ opacity: 0, scale: 0.94 }} transition={{ duration: 0.45 }}>
             <span className="preloader-tag">REC <i aria-hidden="true" /> Reflexo Solutions</span>
+
+            {/* aperture: the ring turns and the opening widens as the count climbs */}
+            <svg className="pre-aperture" viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="100" cy="100" r="92" className="pre-ap-ring" />
+              <g className="pre-ap-spin">
+                {[0, 60, 120, 180, 240, 300].map((a) => (
+                  <line key={a} x1="100" y1="100" x2="100" y2="8" transform={`rotate(${a} 100 100)`} className="pre-ap-spoke" />
+                ))}
+              </g>
+              <circle cx="100" cy="100" r={14 + open * 62} className="pre-ap-eye" />
+            </svg>
+
             <div className="preloader-mask">
               <motion.span
                 className="preloader-word"

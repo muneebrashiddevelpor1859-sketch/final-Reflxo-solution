@@ -2,40 +2,63 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
-// Focus reticle: a precise dot + a ring that "locks on" to links/buttons, shows a label on [data-cursor-label]
+// "Reflex lens": a glass circle that follows the pointer and shows the page's mirror world
+// (inverted light and dark) underneath it. It grows over links and buttons, shows a label on
+// [data-cursor-label], pinches when you press, and sends out a ring on click.
 export default function Cursor() {
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 420, damping: 34, mass: 0.45 });
-  const sy = useSpring(y, { stiffness: 420, damping: 34, mass: 0.45 });
+  const x = useMotionValue(-200);
+  const y = useMotionValue(-200);
+  const sx = useSpring(x, { stiffness: 260, damping: 28, mass: 0.5 });
+  const sy = useSpring(y, { stiffness: 260, damping: 28, mass: 0.5 });
   const [enabled, setEnabled] = useState(false);
-  const [mode, setMode] = useState('idle'); // idle | link | label
+  const [mode, setMode] = useState('idle'); // idle | link | label | text
   const [label, setLabel] = useState('');
+  const [down, setDown] = useState(false);
+  const [rings, setRings] = useState([]);
 
   useEffect(() => {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
     setEnabled(true);
     document.documentElement.classList.add('has-cursor');
 
+    let id = 0;
     const move = (e) => {
       x.set(e.clientX);
       y.set(e.clientY);
     };
     const over = (e) => {
-      const lab = e.target.closest?.('[data-cursor-label]');
+      const t = e.target;
+      const lab = t.closest?.('[data-cursor-label]');
       if (lab) {
         setLabel(lab.getAttribute('data-cursor-label'));
         setMode('label');
-        return;
-      }
-      if (e.target.closest?.('a, button, input, textarea, select, [data-cursor]')) setMode('link');
+      } else if (t.closest?.('input, textarea, select')) setMode('text');
+      else if (t.closest?.('a, button, [data-cursor]')) setMode('link');
       else setMode('idle');
+    };
+    const press = (e) => {
+      setDown(true);
+      id += 1;
+      const ring = { id, x: e.clientX, y: e.clientY };
+      setRings((r) => [...r.slice(-3), ring]);
+      setTimeout(() => setRings((r) => r.filter((q) => q.id !== ring.id)), 900);
+    };
+    const release = () => setDown(false);
+    const leave = () => {
+      x.set(-200);
+      y.set(-200);
     };
     window.addEventListener('mousemove', move);
     window.addEventListener('mouseover', over);
+    window.addEventListener('mousedown', press);
+    window.addEventListener('mouseup', release);
+    document.documentElement.addEventListener('mouseleave', leave);
     return () => {
       window.removeEventListener('mousemove', move);
       window.removeEventListener('mouseover', over);
+      window.removeEventListener('mousedown', press);
+      window.removeEventListener('mouseup', release);
+      document.documentElement.removeEventListener('mouseleave', leave);
       document.documentElement.classList.remove('has-cursor');
     };
   }, [x, y]);
@@ -44,10 +67,15 @@ export default function Cursor() {
 
   return (
     <>
-      <motion.div className="cursor-dot" style={{ x, y }} />
-      <motion.div className="cursor-ring" style={{ x: sx, y: sy }}>
-        <div className={`cursor-ring-inner is-${mode}`}>{mode === 'label' && <span className="cursor-label">{label}</span>}</div>
+      <motion.div className="lens" style={{ x: sx, y: sy }} aria-hidden="true">
+        <div className={`lens-body is-${mode}${down ? ' is-down' : ''}`}>
+          {mode === 'label' && <span className="lens-label">{label}</span>}
+        </div>
       </motion.div>
+      <motion.div className="cursor-dot" style={{ x, y }} aria-hidden="true" />
+      {rings.map((r) => (
+        <span key={r.id} className="lens-ring" style={{ left: r.x, top: r.y }} aria-hidden="true" />
+      ))}
     </>
   );
 }

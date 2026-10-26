@@ -7,8 +7,8 @@ import { SLIDES } from './HeroIris';
 import { stats } from '@/data/site';
 import './hero.css';
 
-const HERO_VIDEO = 'videos/5725949-uhd_3840_2160_30fps.mp4'; 
-const REEL_VIDEO = 'videos/5725951-uhd_3840_2160_30fps.mp4'; // hero ke neeche wali (scroll par khulne wali) video (Mixkit link)
+const HERO_VIDEO = '/videos/5725949-uhd_3840_2160_30fps.mp4'; 
+const REEL_VIDEO = '/videos/5725951-uhd_3840_2160_30fps.mp4'; // hero ke neeche wali (scroll par khulne wali) video (Mixkit link)
 const REEL_FALLBACK = '/videos/reel-office.mp4'; // Mixkit link na chale to ye chalegi
 const REEL_POSTER = '/videos/hero-poster.jpg'; // video load hone tak dikhne wali tasveer
 const REEL_START = 0; 
@@ -110,7 +110,7 @@ export default function Hero() {
       <section className="hx" ref={heroRef} aria-labelledby="home-hero-title">
         {/* background: office video + gradient + soft moving light */}
         <motion.div className="hx-bg" style={{ y: bgY, scale: bgScale }} aria-hidden="true">
-          <video ref={videoRef} autoPlay muted loop playsInline preload="auto" poster="/videos/hero-poster.jpg">
+          <video ref={videoRef} autoPlay muted loop playsInline preload="metadata" poster="/videos/hero-poster.jpg">
             <source src={HERO_VIDEO} type="video/mp4" />
           </video>
         </motion.div>
@@ -138,8 +138,8 @@ export default function Hero() {
                     <motion.span
                       className={`hx-line-in ${l.cls}`}
                       variants={{
-                        hidden: { y: '110%', filter: 'blur(14px)' },
-                        show: { y: '0%', filter: 'blur(0px)' },
+                        hidden: { y: '70%', rotateX: -95, filter: 'blur(14px)', transformOrigin: '50% 0%' },
+                        show: { y: '0%', rotateX: 0, filter: 'blur(0px)', transformOrigin: '50% 0%' },
                       }}
                       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                     >
@@ -282,7 +282,7 @@ function HeroReel() {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="none"
               poster={REEL_POSTER}
               aria-hidden="true"
               onLoadedMetadata={(e) => {

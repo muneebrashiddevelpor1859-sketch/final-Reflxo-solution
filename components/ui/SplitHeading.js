@@ -1,8 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
 
-// "Focus pull": each word rises out of a mask while snapping from blurry to sharp.
-// `lines` = array of strings, each string is one visual line.
+// "Mirror flip": each word swings down from a hinge on its top edge, like the mirror in a reflex
+// camera, while snapping from blurry to sharp. `lines` = array of strings, one per visual line.
 export default function SplitHeading({
   lines = [],
   as = 'h2',
@@ -24,7 +24,7 @@ export default function SplitHeading({
       className={`split ${className}`}
       initial="hide"
       {...anim}
-      transition={{ staggerChildren: 0.06, delayChildren: delay }}
+      transition={{ staggerChildren: 0.07, delayChildren: delay }}
       aria-label={lines.join(' ')}
     >
       {words.map((line, li) => (
@@ -36,10 +36,10 @@ export default function SplitHeading({
                 <motion.span
                   className="split-word"
                   variants={{
-                    hide: { y: '108%', filter: 'blur(14px)', opacity: 0 },
-                    show: { y: '0%', filter: 'blur(0px)', opacity: 1 },
+                    hide: { y: '70%', rotateX: -100, filter: 'blur(12px)', opacity: 0, transformOrigin: '50% 0%' },
+                    show: { y: '0%', rotateX: 0, filter: 'blur(0px)', opacity: 1, transformOrigin: '50% 0%' },
                   }}
-                  transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {w}
                 </motion.span>

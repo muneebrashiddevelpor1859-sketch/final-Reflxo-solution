@@ -8,9 +8,9 @@ const STOPS = ['1.4', '2', '2.8', '4', '5.6', '8'];
 const TICKS = Array.from({ length: 72 }, (_, i) => i);
 
 export const SLIDES = [
-  { n: '01', label: 'Brand & strategy', src: '/images/office/o03.jpg', alt: 'Designer reviewing an interface on a laptop' },
-  { n: '02', label: 'Digital experiences', src: '/images/office/o04.jpg', alt: 'Developers working at their desks' },
-  { n: '03', label: 'AI & automation', src: '/images/office/o06.jpg', alt: 'Team discussing charts on a whiteboard' },
+  { n: '01', label: 'Brand & strategy', src: '/images/cards/o10-c.jpg', alt: 'Designer reviewing an interface on a laptop' },
+  { n: '02', label: 'Digital experiences', src: '/images/cards/o08-c.jpg', alt: 'Developers working at their desks' },
+  { n: '03', label: 'AI & automation', src: '/images/cards/o03-c.jpg', alt: 'Team discussing charts on a whiteboard' },
 ];
 
 const poly = (r, deg) =>

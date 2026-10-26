@@ -1,7 +1,8 @@
 import '@fontsource-variable/manrope';
-import '@fontsource-variable/sora';
+import '@fontsource-variable/bricolage-grotesque';
 import './globals.css';
 import './agency.css';
+import './studio.css';
 import SmoothScroll from '@/components/layout/SmoothScroll';
 import Preloader from '@/components/layout/Preloader';
 import Cursor from '@/components/layout/Cursor';
@@ -11,6 +12,7 @@ import Footer from '@/components/layout/Footer';
 import PageMotion from '@/components/layout/PageMotion';
 import ChatWidget from '@/components/chat/ChatWidget';
 import Providers from '@/components/layout/Providers';
+import Kinetic from '@/components/layout/Kinetic';
 import { site } from '@/data/site';
 
 export const metadata = {
@@ -25,7 +27,7 @@ export const metadata = {
   },
 };
 
-export const viewport = { themeColor: '#ede9e0' };
+export const viewport = { themeColor: '#eeecf7' };
 
 export default function RootLayout({ children }) {
   return (
@@ -37,6 +39,7 @@ export default function RootLayout({ children }) {
           <Preloader />
           <Cursor />
           <Spotlight />
+          <Kinetic />
           <Header />
           <main id="main"><PageMotion>{children}</PageMotion></main>
           <Footer />

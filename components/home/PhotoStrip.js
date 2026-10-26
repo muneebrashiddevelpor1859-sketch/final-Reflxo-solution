@@ -19,8 +19,8 @@ function Row({ items, reverse }) {
 }
 
 export default function PhotoStrip() {
-  const a = OFFICE.slice(0, 6);
-  const b = OFFICE.slice(5).concat(OFFICE.slice(0, 1));
+  const a = OFFICE.slice(0, 6); // 6 different pictures
+  const b = OFFICE.slice(6); // the other 5: no picture is shared between the two rows
   return (
     <section className="pstrip" aria-label="The team at work">
       <Row items={a} />

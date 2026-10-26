@@ -1,0 +1,104 @@
+/* =====================================================================
+   REFLEXO - STUDIO LAYER  ("Ultraviolet reflex")
+   Loaded last. Visual identity + motion only: no content, routes or data change.
+   Delete the import in layout.js (and Kinetic) to go back to the previous look.
+   Signature ideas, all built around the name:
+   - reflex lens cursor: a glass circle that shows the page's mirror world
+   - mirror-flip headings: words swing down from a top hinge like a camera mirror
+   - aperture transitions: preloader and page changes iris open/close on your click
+      - prism edges on cards, pointer-parallax light in the hero
+   ===================================================================== */
+
+@property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@keyframes prism-spin { to { --ang: 360deg; } }
+@keyframes lens-ring { from { transform: translate(-50%, -50%) scale(0.2); opacity: 0.9; } to { transform: translate(-50%, -50%) scale(2.6); opacity: 0; } }
+@keyframes ap-spin { to { transform: rotate(360deg); } }
+@keyframes uv-pan { to { background-position: 220% 50%; } }
+
+:root {
+  --uv-a: #ff3d9a;
+  --uv-b: #6e60ff;
+  --uv-c: #ffa3d2;
+}
+
+/* ---------- type: Bricolage Grotesque carries the personality ---------- */
+.display, .h2, .h3, .hero-title, .hx-title, .menu-link, .footer-word, .preloader-word, .marquee-item, .svx-title, .sword p,
+.sx-page .sx-hero-title, .sx-page .sx-roll, .stat-value, .process-no, .result-value {
+  font-weight: 700;
+  font-optical-sizing: auto;
+  font-variation-settings: 'opsz' 96;
+}
+.display, .hx-title { letter-spacing: -0.04em; }
+.h2 { letter-spacing: -0.036em; }
+.logo-text { font-weight: 800; }
+
+/* ---------- reflex lens cursor ---------- */
+.lens { position: fixed; left: 0; top: 0; z-index: 9998; pointer-events: none; }
+.lens-body { position: absolute; display: grid; place-items: center; width: 74px; height: 74px; margin: -37px 0 0 -37px; border-radius: 50%;
+  -webkit-backdrop-filter: invert(1) hue-rotate(180deg) saturate(1.25); backdrop-filter: invert(1) hue-rotate(180deg) saturate(1.25);
+  box-shadow: 0 0 0 1px rgba(255, 61, 154, 0.85), 0 0 0 5px rgba(255, 61, 154, 0.14), 0 18px 50px -14px rgba(110, 96, 255, 0.55);
+  transition: width 0.55s var(--ease), height 0.55s var(--ease), margin 0.55s var(--ease), box-shadow 0.4s, transform 0.3s var(--ease); }
+.lens-body.is-link { width: 118px; height: 118px; margin: -59px 0 0 -59px; }
+.lens-body.is-label { width: 150px; height: 150px; margin: -75px 0 0 -75px; }
+.lens-body.is-text { width: 46px; height: 46px; margin: -23px 0 0 -23px; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1.5px var(--signal); }
+.lens-body.is-down { transform: scale(0.78); }
+.lens-label { padding: 0.4rem 0.8rem; border-radius: 999px; background: var(--signal); color: var(--ink); font-size: 0.64rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+.cursor-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; }
+.lens-ring { position: fixed; z-index: 9997; width: 80px; height: 80px; border-radius: 50%; border: 1.5px solid var(--signal); pointer-events: none; animation: lens-ring 0.85s var(--ease) forwards; }
+
+/* ---------- preloader: aperture ---------- */
+.pre-blade { height: 100%; }
+.pre-blade-top { height: 100%; }
+.pre-blade-bottom { display: none; }
+.pre-aperture { position: absolute; left: 50%; top: 50%; width: min(46vmin, 380px); height: auto; transform: translate(-50%, -52%); overflow: visible; pointer-events: none; }
+.pre-ap-ring { fill: none; stroke: var(--on-ink-line); stroke-width: 1; }
+.pre-ap-spin { transform-origin: 100px 100px; animation: ap-spin 5s linear infinite; }
+.pre-ap-spoke { stroke: var(--on-ink-line); stroke-width: 1; }
+.pre-ap-eye { fill: var(--signal); transition: r 0.12s linear; filter: drop-shadow(0 0 22px rgba(255, 61, 154, 0.7)); }
+
+/* ---------- page transition: iris ---------- */
+.page-iris { position: fixed; inset: 0; z-index: 900; background: var(--ink); pointer-events: none; }
+.page-iris-signal { background: linear-gradient(135deg, var(--uv-a), var(--uv-b)); z-index: 899; }
+.page-wipe { display: none; }
+
+/* ---------- mirror-flip: perspective hinges for the headline words ---------- */
+.split-mask { perspective: 700px; }
+.hx-line { perspective: 900px; }
+.split-word, .hx-line-in { backface-visibility: hidden; }
+
+/* ---------- hero: pointer parallax + a slow light sweep ---------- */
+.hx { --px: 0; --py: 0; }
+.hx-orb-a { translate: calc(var(--px) * -46px) calc(var(--py) * -30px); }
+.hx-orb-b { translate: calc(var(--px) * 58px) calc(var(--py) * 34px); }
+.hx-line-in.is-grad, .hx-rc-line > .is-grad { background-image: linear-gradient(95deg, var(--uv-c) 0%, var(--uv-a) 34%, var(--uv-b) 68%, var(--uv-c) 100%); background-size: 220% 100%; animation: uv-pan 6s linear infinite; }
+
+/* ---------- prism edge: a light ray circles the card border on hover ---------- */
+.why-card::after, .value::after, .stats-grid > .stat::after, .process-card.tone-0::after, .process-card.tone-3::after {
+  content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; padding: 1.5px; pointer-events: none; opacity: 0;
+  background: conic-gradient(from var(--ang), transparent 0deg, var(--uv-a) 70deg, var(--uv-b) 140deg, transparent 220deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  transition: opacity 0.5s var(--ease); }
+.why-card:hover::after, .value:hover::after, .stats-grid > .stat:hover::after, .process-card.tone-0:hover::after, .process-card.tone-3:hover::after { opacity: 1; }
+
+@media (hover: hover) {
+  .why-card:hover::after, .value:hover::after, .stats-grid > .stat:hover::after, .process-card.tone-0:hover::after, .process-card.tone-3:hover::after { animation: prism-spin 3.2s linear infinite; }
+}
+
+/* ---------- ultraviolet accents over the pearl base ---------- */
+body { background: radial-gradient(60vw 40vw at 100% 0%, rgba(110, 96, 255, 0.08), transparent 70%), radial-gradient(50vw 40vw at 0% 40%, rgba(255, 61, 154, 0.06), transparent 70%), var(--bone); }
+.progress-bar { background: linear-gradient(90deg, var(--uv-c), var(--uv-a), var(--uv-b)); box-shadow: 0 0 16px rgba(255, 61, 154, 0.6); }
+::selection { background: var(--uv-a); color: var(--ink); }
+.marquee { background: radial-gradient(60% 140% at 85% 0%, rgba(110, 96, 255, 0.4), transparent 62%), radial-gradient(50% 120% at 0% 100%, rgba(255, 61, 154, 0.3), transparent 62%), var(--ink); }
+.process-card.tone-2 { background: linear-gradient(135deg, var(--uv-a), var(--uv-b)); color: #fff; }
+.btn-signal { background: linear-gradient(120deg, var(--uv-c), var(--uv-a) 55%, #ff2e8a); }
+
+/* ---------- phones and reduced motion ---------- */
+@media (max-width: 700px) {
+}
+@media (prefers-reduced-motion: reduce) {
+  .why-card::after, .value::after, .stats-grid > .stat::after, .process-card::after, .hx-line-in.is-grad { animation: none; }
+  .pre-ap-spin { animation: none; }
+}
+
+/* paper grain without the full-screen blend (much lighter to paint) */
+body::after { mix-blend-mode: normal; opacity: 0.035; }
