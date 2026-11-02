@@ -10,17 +10,10 @@ export default function PortfolioGrid() {
 
   return (
     <section className="container portfolio">
-      <div className="filters" role="tablist" aria-label="Filter projects">
+      <div className="tabs" role="tablist" aria-label="Filter projects">
         {categories.map((c) => (
-          <button
-            key={c}
-            role="tab"
-            aria-selected={active === c}
-            className={`filter ${active === c ? 'is-active' : ''}`}
-            onClick={() => setActive(c)}
-          >
-            {active === c && <motion.span layoutId="filter-pill" className="filter-pill" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />}
-            <span className="filter-label">{c}</span>
+          <button key={c} role="tab" aria-selected={active === c} className={`tab${active === c ? ' is-active' : ''}`} onClick={() => setActive(c)}>
+            {c}
           </button>
         ))}
       </div>

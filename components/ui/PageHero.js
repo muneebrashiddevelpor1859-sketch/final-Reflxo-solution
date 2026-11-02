@@ -1,42 +1,39 @@
 import SplitHeading from './SplitHeading';
 import Reveal from './Reveal';
+import PheroBg from './PheroBg';
 
-// Header block reused by inner pages: oversized title, viewfinder corners, hairline footer.
-export default function PageHero({
-  lines,
-  text,
-  kicker,
-  italicLines = [],
-  video = false,
-  className = '',
-  index,
-}) {
-  const src = typeof video === 'string' ? video : '/videos/blog.mp4';
+// Every inner page gets its own fixed background picture.
+const BG = {
+  services: '/images/office/o04.jpg',
+  portfolio: '/images/office/o08.jpg',
+  blog: '/images/office/o06.jpg',
+  contact: '/images/office/o01.jpg',
+};
 
+// Header block for inner pages: refined title, short lead, fixed picture behind a soft pearl veil.
+export default function PageHero({ lines, text, kicker, italicLines = [], className = '', index, image, children }) {
+  const bg = image || BG[(kicker || '').toLowerCase()] || '/images/office/o03.jpg';
   return (
-    <section className={`page-hero${video ? ' has-video' : ''} ${className}`.trim()}>
-      {video && (
-        <div className="page-hero-video" aria-hidden="true">
-          <video autoPlay muted loop playsInline preload="auto">
-            <source src={src} type="video/mp4" />
-          </video>
-        </div>
-      )}
-      <div className="container page-hero-content">
-        <div className="ph-top">
-          {kicker && (
+    <section className={`phero ${className}`.trim()}>
+      <PheroBg src={bg} />
+      <div className="container">
+        <div className="phero-top">
+          {kicker ? (
             <Reveal y={12}>
               <p className="kicker">{kicker}</p>
             </Reveal>
+          ) : (
+            <span />
           )}
-          {index && <span className="ph-index">{index}</span>}
+          {index && <span className="phero-index">{index}</span>}
         </div>
-        <SplitHeading as="h1" lines={lines} immediate delay={0.15} italicLines={italicLines} className="display" />
+        <SplitHeading as="h1" lines={lines} immediate delay={0.1} italicLines={italicLines} className="h-xl" />
         {text && (
-          <Reveal delay={0.5} y={24}>
-            <p className="lead ph-lead">{text}</p>
+          <Reveal delay={0.4} y={20}>
+            <p className="lead phero-lead">{text}</p>
           </Reveal>
         )}
+        {children}
       </div>
     </section>
   );

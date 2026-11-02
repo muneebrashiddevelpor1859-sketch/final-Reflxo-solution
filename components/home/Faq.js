@@ -17,7 +17,8 @@ export default function Faq() {
     <section className="section faq">
       <div className="container faq-grid">
         <div>
-          <SplitHeading lines={['A few things people', 'usually ask.']} italicLines={[1]} className="h2" />
+          <p className="kicker">FAQ</p>
+          <SplitHeading lines={['A few things people', 'usually ask.']} italicLines={[1]} className="h-lg" />
         </div>
         <ul className="faq-list">
           {faqs.map((f, i) => (
@@ -32,7 +33,7 @@ export default function Faq() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     style={{ overflow: 'hidden' }}
                   >
                     <p>{f.a}</p>

@@ -1,39 +1,28 @@
-'use client';
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { process as steps } from '@/data/site';
+import Reveal from '../ui/Reveal';
 import SplitHeading from '../ui/SplitHeading';
 
-function Card({ s, i, n, progress }) {
-  const scale = useTransform(progress, [i / n, 1], [1, 0.9]);
-  const dim = useTransform(progress, [i / n, 1], [1, 0.55]);
+// Numbered process list. `tone="lime"` paints the section in the accent colour.
+export default function Process({ tone = 'lime' }) {
   return (
-    <motion.article className={`process-card tone-${i % 4}`} style={{ '--i': i, scale, opacity: i === n - 1 ? 1 : dim, transformOrigin: '50% 0%' }}>
-      <span className="process-no">{String(i + 1).padStart(2, '0')}</span>
-      <div>
-        <h3>{s.title}</h3>
-        <p>{s.text}</p>
-      </div>
-    </motion.article>
-  );
-}
-
-// Cards stack on top of each other while scrolling; earlier ones shrink and fade back
-export default function Process() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 70%', 'end 60%'] });
-  return (
-    <section className="section process">
+    <section className={`section process process-${tone}`}>
       <div className="container process-grid">
         <div className="process-intro">
-          <SplitHeading lines={['How a project', 'unfolds']} italicLines={[1]} className="h2" />
-          <p className="muted">One focused team, a shared plan, and no surprises between the first conversation and launch.</p>
+          <p className="kicker">Our process</p>
+          <SplitHeading lines={['How a project', 'unfolds']} italicLines={[1]} className="h-lg" />
+          <p className="lead">One focused team, a shared plan, and no surprises between the first conversation and launch.</p>
         </div>
-        <div className="process-stack" ref={ref}>
+        <ol className="process-list">
           {steps.map((s, i) => (
-            <Card key={s.title} s={s} i={i} n={steps.length} progress={scrollYProgress} />
+            <Reveal as="li" key={s.title} delay={i * 0.06} y={30} className="process-row">
+              <span className="process-no">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
+            </Reveal>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

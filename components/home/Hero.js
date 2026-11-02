@@ -1,347 +1,87 @@
 'use client';
-
-import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Button from '../ui/Button';
-import { SLIDES } from './HeroIris';
+import FixedMedia from '../ui/FixedMedia';
 import { stats } from '@/data/site';
-import './hero.css';
 
-const HERO_VIDEO = '/videos/5725949-uhd_3840_2160_30fps.mp4'; 
-const REEL_VIDEO = '/videos/5725951-uhd_3840_2160_30fps.mp4'; // hero ke neeche wali (scroll par khulne wali) video (Mixkit link)
-const REEL_FALLBACK = '/videos/reel-office.mp4'; // Mixkit link na chale to ye chalegi
-const REEL_POSTER = '/videos/hero-poster.jpg'; // video load hone tak dikhne wali tasveer
-const REEL_START = 0; 
-const lines = [
-  { text: 'Make your', cls: '' },
-  { text: 'next move', cls: 'is-grad' },
-  { text: 'count.', cls: '' },
-];
+const line = {
+  hide: { y: '112%' },
+  show: (i) => ({ y: '0%', transition: { duration: 1.05, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] } }),
+};
 
-// plays only while it is on screen (saves battery and keeps scrolling smooth)
-function useVideoInView(ref) {
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || typeof IntersectionObserver === 'undefined') return undefined;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) el.play().catch(() => {});
-        else el.pause();
-      },
-      { threshold: 0.01 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [ref]);
-}
-
-// Opening screen: office-meeting video behind the headline, a dark brand gradient on top,
-// and below it a video "frame" that opens up to full screen as you scroll.
+// Full-screen hero: a video that stays fixed while the page scrolls over it, under a soft pearl veil.
 export default function Hero() {
   const [ready, setReady] = useState(false);
-  const [time, setTime] = useState('');
-  const [active, setActive] = useState(0);
-  const [tick, setTick] = useState(0);
-  const heroRef = useRef(null);
-  const videoRef = useRef(null);
-  useVideoInView(videoRef);
 
+  // wait for the one-time preloader on the first visit of a session
   useEffect(() => {
-    let seen = false;
+    let seen = true;
     try {
       seen = !!sessionStorage.getItem('reflexo-intro');
     } catch {}
-    const t = setTimeout(() => setReady(true), seen ? 200 : 2500);
+    const t = setTimeout(() => setReady(true), seen ? 80 : 2100);
     return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => {
-    const t = () => setTime(new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }));
-    t();
-    const id = setInterval(t, 30000);
-    return () => clearInterval(id);
-  }, []);
-
-  // the header sits on a dark video here, so it switches to light text until you scroll past the hero
-  useEffect(() => {
-    const root = document.documentElement;
-    const update = () => {
-      const h = heroRef.current ? heroRef.current.offsetHeight : 600;
-      if (window.scrollY < h - 90) root.setAttribute('data-hero', 'dark');
-      else root.removeAttribute('data-hero');
-    };
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
-      root.removeAttribute('data-hero');
-    };
-  }, []);
-
-  // pictures change by themselves (restarts the countdown after a manual pick)
-  useEffect(() => {
-    if (!ready) return undefined;
-    const id = setTimeout(() => setActive((a) => (a + 1) % SLIDES.length), 4200);
-    return () => clearTimeout(id);
-  }, [ready, active, tick]);
-
-  const pick = (i) => {
-    setActive(i);
-    setTick((n) => n + 1);
-  };
-
-  // video drifts slower than the page, content fades as you leave the hero
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '14%']);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.16]);
-  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', '-8%']);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.15]);
-
-  const rise = (delay) => ({
-    initial: { opacity: 0, y: 24 },
-    animate: ready ? { opacity: 1, y: 0 } : {},
-    transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] },
-  });
+  const state = ready ? 'show' : 'hide';
 
   return (
-    <>
-      <section className="hx" ref={heroRef} aria-labelledby="home-hero-title">
-        {/* background: office video + gradient + soft moving light */}
-        <motion.div className="hx-bg" style={{ y: bgY, scale: bgScale }} aria-hidden="true">
-          <video ref={videoRef} autoPlay muted loop playsInline preload="metadata" poster="/videos/hero-poster.jpg">
-            <source src={HERO_VIDEO} type="video/mp4" />
-          </video>
-        </motion.div>
-        <div className="hx-grad" aria-hidden="true" />
-        <div className="hx-orb hx-orb-a" aria-hidden="true" />
-        <div className="hx-orb hx-orb-b" aria-hidden="true" />
-        <div className="hx-dots" aria-hidden="true" />
-
-        <motion.div className="hx-inner" style={{ y: copyY, opacity: copyOpacity }}>
-         
-
-          <div className="container hx-main">
-            <div className="hx-copy">
-             
-              <motion.h1
-                id="home-hero-title"
-                className="hx-title"
-                initial="hidden"
-                animate={ready ? 'show' : 'hidden'}
-                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } } }}
-                aria-label="Make your next move count."
-              >
-                {lines.map((l) => (
-                  <span className="hx-line" key={l.text} aria-hidden="true">
-                    <motion.span
-                      className={`hx-line-in ${l.cls}`}
-                      variants={{
-                        hidden: { y: '70%', rotateX: -95, filter: 'blur(14px)', transformOrigin: '50% 0%' },
-                        show: { y: '0%', rotateX: 0, filter: 'blur(0px)', transformOrigin: '50% 0%' },
-                      }}
-                      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                      {l.text}
-                    </motion.span>
-                  </span>
-                ))}
-              </motion.h1>
-
-              <motion.p className="hx-sub" {...rise(0.7)}>
-                Websites, visual identities and useful automations, built around the people who use them.
-              </motion.p>
-              <motion.div className="hx-actions" {...rise(0.85)}>
-                <Button href="/contact" variant="signal">Start a project</Button>
-                <Button href="/services" variant="line">What we do</Button>
-              </motion.div>
-            </div>
-
-            <motion.aside className="hx-panel" aria-label="Focus areas" {...rise(0.95)}>
-              <div className="hx-panel-media" aria-hidden="true">
-                {SLIDES.map((s, i) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img key={s.src} src={s.src} alt="" className={i === active ? 'is-on' : ''} loading={i === 0 ? 'eager' : 'lazy'} />
-                ))}
-                <span className="hx-panel-count"><b>{SLIDES[active].n}</b> / {String(SLIDES.length).padStart(2, '0')}</span>
-              </div>
-              <ul className="hx-index">
-                {SLIDES.map((s, i) => (
-                  <li key={s.n} className={i === active ? 'is-active' : ''}>
-                    <button type="button" onClick={() => pick(i)} onMouseEnter={() => pick(i)} aria-pressed={i === active}>
-                      <i>{s.n}</i>
-                      <span>{s.label}</span>
-                      <em aria-hidden="true">{i === active && <u key={`${active}-${tick}`} />}</em>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </motion.aside>
-          </div>
-
-          <div className="container hx-foot">
-            <motion.span className="hx-scroll" {...rise(1.1)} aria-hidden="true">
-              <i /> Scroll
-            </motion.span>
-          </div>
-        </motion.div>
-      </section>
-
-      <HeroReel />
-    </>
-  );
-}
-
-
-const REEL_CHIPS = ['Strategy', 'Digital experiences', 'Brand systems', 'AI & automation', 'E-commerce', 'Growth'];
-
-// One line of the reel headline: rises out of a mask (and un-blurs) at its point in the scroll.
-function ReelLine({ progress, from, children, className = '' }) {
-  const y = useTransform(progress, [from, from + 0.1], ['110%', '0%']);
-  const o = useTransform(progress, [from, from + 0.07], [0, 1]);
-  const f = useTransform(progress, [from, from + 0.1], [10, 0]);
-  const blur = useMotionTemplate`blur(${f}px)`;
-  return (
-    <span className="hx-rc-line">
-      <motion.span className={className} style={{ y, opacity: o, filter: blur }}>{children}</motion.span>
-    </span>
-  );
-}
-
-// Any block that fades and slides up at its point in the scroll.
-function ReelIn({ progress, from, children, className = '', as = 'div' }) {
-  const Tag = motion[as];
-  const y = useTransform(progress, [from, from + 0.1], [26, 0]);
-  const o = useTransform(progress, [from, from + 0.08], [0, 1]);
-  return <Tag className={className} style={{ y, opacity: o }}>{children}</Tag>;
-}
-
-// Numbers count up while you scroll.
-function ReelStat({ progress, from, s }) {
-  const n = useTransform(progress, [from + 0.02, from + 0.16], [0, s.value]);
-  const r = useTransform(n, (v) => Math.round(v));
-  return (
-    <ReelIn progress={progress} from={from} className="hx-rc-stat">
-      <b><motion.span>{r}</motion.span>{s.suffix}</b>
-      <span>{s.label}</span>
-    </ReelIn>
-  );
-}
-
-// The video starts as a small rounded window and opens to the full screen while you scroll through.
-function HeroReel() {
-  const ref = useRef(null);
-  const tc = useRef(null);
-  const videoRef = useRef(null);
-  useVideoInView(videoRef);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-
-  const inset = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const top = useTransform(inset, (v) => `${v * 12}%`);
-  const side = useTransform(inset, (v) => `${v * 22}%`);
-  const round = useTransform(inset, (v) => `${v * 26}px`);
-  const clip = useMotionTemplate`inset(${top} ${side} ${top} ${side} round ${round})`;
-  const zoom = useTransform(scrollYProgress, [0, 0.45], [1.25, 1]);
-  const hud = useTransform(scrollYProgress, [0.32, 0.46], [0, 1]);
-  const cue = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
-  const outline = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const bar = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const veil = useTransform(scrollYProgress, [0.42, 0.62], [0, 1]);
-  const live = useTransform(scrollYProgress, (v) => (v > 0.52 ? 'auto' : 'none'));
-  const pushUp = useTransform(scrollYProgress, [0.9, 1], [0, -30]);
-
-  // running timecode in the corner of the frame (updates a text node directly, no re-renders)
-  useEffect(() => {
-    const start = performance.now();
-    const id = setInterval(() => {
-      if (!tc.current) return;
-      const t = (performance.now() - start) / 1000;
-      const h = String(Math.floor(t / 3600)).padStart(2, '0');
-      const m = String(Math.floor((t % 3600) / 60)).padStart(2, '0');
-      const s = String(Math.floor(t % 60)).padStart(2, '0');
-      const f = String(Math.floor((t % 1) * 25)).padStart(2, '0');
-      tc.current.textContent = `${h}:${m}:${s}:${f}`;
-    }, 80);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <section className="hx-reel" ref={ref} aria-label="Studio reel">
-      <div className="hx-reel-stick">
-        <div className="hx-reel-bg" aria-hidden="true" />
-
-        {/* thin light frame that sits around the small window and fades as it opens */}
-        <motion.div className="hx-reel-outline" style={{ top, bottom: top, left: side, right: side, opacity: outline }} aria-hidden="true" />
-
-        <motion.div className="hx-reel-frame" style={{ clipPath: clip }}>
-          <motion.div className="hx-reel-video" style={{ scale: zoom }}>
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="none"
-              poster={REEL_POSTER}
-              aria-hidden="true"
-              onLoadedMetadata={(e) => {
-                try {
-                  e.currentTarget.currentTime = REEL_START;
-                } catch {}
-              }}
-            >
-              <source src={REEL_VIDEO} type="video/mp4" />
-              <source src={REEL_FALLBACK} type="video/mp4" />
-            </video>
-          </motion.div>
-          <div className="hx-reel-shade" aria-hidden="true" />
-          <div className="hx-reel-tint" aria-hidden="true" />
-
-
-          {/* agency content that appears once the video is full screen */}
-          <motion.div className="hx-reel-veil" style={{ opacity: veil }} aria-hidden="true" />
-          <motion.div className="hx-reel-copy container" style={{ pointerEvents: live, y: pushUp }}>
-          
-            <h2 className="hx-rc-title" aria-label="Make the next move matter.">
-              <ReelLine progress={scrollYProgress} from={0.52}>Make the next</ReelLine>
-              <ReelLine progress={scrollYProgress} from={0.58} className="is-grad">move matter.</ReelLine>
-            </h2>
-            <ReelIn progress={scrollYProgress} from={0.64} as="p" className="hx-rc-text">
-              Brand, web and AI, connected into one clear digital direction for your business.
-            </ReelIn>
-            <ul className="hx-rc-chips" aria-label="Capabilities">
-              {REEL_CHIPS.map((c, i) => (
-                <li key={c}>
-                  <ReelIn progress={scrollYProgress} from={0.67 + i * 0.012} as="span">{c}</ReelIn>
-                </li>
-              ))}
-            </ul>
-            <ReelIn progress={scrollYProgress} from={0.72} className="hx-rc-actions">
-              <Button href="/services" variant="signal">Explore all services</Button>
-              <Button href="/portfolio" variant="line">See selected work</Button>
-            </ReelIn>
-            <div className="hx-rc-stats">
-              {stats.map((s, i) => (
-                <ReelStat key={s.label} progress={scrollYProgress} from={0.74 + i * 0.03} s={s} />
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div className="hx-reel-hud" style={{ opacity: hud }} aria-hidden="true">
-            <span className="hud-rec"><i /> REC</span>
-            <span className="hud-tc" ref={tc}>00:00:00:00</span>
-            <span className="hud-meta">ISO 400 &nbsp;/&nbsp; f 2.8 &nbsp;/&nbsp; 1/125</span>
-            <span className="hud-title">The studio reel <em>2026</em></span>
-            <i className="hud-c hud-c-tl" /><i className="hud-c hud-c-tr" /><i className="hud-c hud-c-bl" /><i className="hud-c hud-c-br" />
-            <span className="hud-bar"><motion.i style={{ scaleX: bar }} /></span>
-          </motion.div>
-        </motion.div>
-
-        <motion.p className="hx-reel-cue" style={{ opacity: cue }} aria-hidden="true">
-          <i /> Scroll to open the reel
+    <FixedMedia className="hero" video="/videos/reel-office.mp4" veil="fx-veil">
+      <div className="container hero-main">
+        <motion.p className="hero-tag" initial={{ opacity: 0, y: 12 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
+          <span className="dot" aria-hidden="true" /> Web · Brand · AI &mdash; working worldwide
         </motion.p>
+
+        <h1 className="hero-title" aria-label="Digital systems, designed with intent.">
+          <span className="hl" aria-hidden="true">
+            <motion.span className="hl-in" custom={0} variants={line} initial="hide" animate={state}>Digital systems,</motion.span>
+          </span>
+          <span className="hl" aria-hidden="true">
+            <motion.span className="hl-in" custom={1} variants={line} initial="hide" animate={state}>
+              designed
+              <span className="hero-pill">
+                <video autoPlay muted loop playsInline preload="metadata" poster="/videos/hero-poster.jpg">
+                  <source src="/videos/hero-office.mp4" type="video/mp4" />
+                </video>
+              </span>
+            </motion.span>
+          </span>
+          <span className="hl" aria-hidden="true">
+            <motion.span className="hl-in is-dim" custom={2} variants={line} initial="hide" animate={state}>with intent.</motion.span>
+          </span>
+        </h1>
+
+        <motion.div className="hero-row" initial={{ opacity: 0, y: 24 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}>
+          <p className="hero-lead">
+            We are a small, senior studio designing and building websites, brands and AI automation for companies ready to move beyond the ordinary.
+          </p>
+          <div className="hero-actions">
+            <Button href="/contact" variant="solid">Start a project</Button>
+            <Button href="/services" variant="line">What we do</Button>
+          </div>
+        </motion.div>
+
       </div>
-    </section>
+
+      <div className="container hero-bar-wrap">
+        <motion.ul className="hero-bar" initial={{ opacity: 0, y: 30 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}>
+          {stats.map((st) => (
+            <li key={st.label}>
+              <strong>{st.value}{st.suffix}</strong>
+              <span>{st.label}</span>
+            </li>
+          ))}
+        </motion.ul>
+      </div>
+
+      <a href="#intro" className="hero-badge" aria-label="Scroll down" data-cursor-label="Scroll">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <defs><path id="hb" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs>
+          <text><textPath href="#hb" textLength="268" lengthAdjust="spacing">Scroll down · Scroll down · Scroll down · </textPath></text>
+        </svg>
+        <i aria-hidden="true">↓</i>
+      </a>
+    </FixedMedia>
   );
 }

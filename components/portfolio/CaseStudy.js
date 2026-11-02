@@ -1,27 +1,23 @@
 'use client';
-import { useRef } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import Cover from '../ui/Cover';
 import SplitHeading from '../ui/SplitHeading';
 import Reveal from '../ui/Reveal';
 import Button from '../ui/Button';
+import PheroBg from '../ui/PheroBg';
 
 export default function CaseStudy({ project, next }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
-
   return (
     <article className="case">
-      <header className="page-hero case-hero">
+      <header className="phero case-hero">
+        <PheroBg src="/images/office/o10.jpg" />
         <div className="container">
           <Reveal y={14}>
             <Link href="/portfolio" className="back">&larr; All projects</Link>
           </Reveal>
-          <SplitHeading as="h1" lines={[project.title]} immediate delay={0.1} className="display" />
+          <SplitHeading as="h1" lines={[project.title]} immediate delay={0.1} className="h-xl" />
           <Reveal delay={0.4} y={20}>
-            <p className="lead">{project.summary}</p>
+            <p className="lead phero-lead">{project.summary}</p>
           </Reveal>
         </div>
       </header>
@@ -36,21 +32,19 @@ export default function CaseStudy({ project, next }) {
           </dl>
         </Reveal>
 
-        <div className="case-visual crop" ref={ref}>
-          <div className="case-visual-clip">
-            <motion.div className="case-visual-inner" style={{ y }}>
-              <Cover title={project.title} hue={project.hue} image={project.image} />
-            </motion.div>
+        <Reveal y={50}>
+          <div className="case-visual">
+            <Cover title={project.title} hue={project.hue} image={project.image} />
           </div>
-        </div>
+        </Reveal>
 
         <div className="case-text">
           <Reveal>
-            <h2 className="h3"><span>01</span> The challenge</h2>
+            <h2 className="h-md"><span>01</span> The challenge</h2>
             <p>{project.challenge}</p>
           </Reveal>
           <Reveal delay={0.1}>
-            <h2 className="h3"><span>02</span> What we did</h2>
+            <h2 className="h-md"><span>02</span> What we did</h2>
             <p>{project.solution}</p>
           </Reveal>
         </div>
@@ -71,13 +65,14 @@ export default function CaseStudy({ project, next }) {
 
       <div className="container">
         {next && (
-          <Link href={`/portfolio/${next.slug}`} className="case-next" data-cursor-label="Next">
+          <Link href={`/portfolio/${next.slug}`} className="next-block" data-cursor-label="Next">
             <span>Next project</span>
             <strong>{next.title}</strong>
+            <i aria-hidden="true">→</i>
           </Link>
         )}
         <div className="case-cta">
-          <p className="h3">Want results like these?</p>
+          <p className="h-md">Want results like these?</p>
           <Button href={`/contact?service=${encodeURIComponent(project.category)}`}>Start a project</Button>
         </div>
       </div>

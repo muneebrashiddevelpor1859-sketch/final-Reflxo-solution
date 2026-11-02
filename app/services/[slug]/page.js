@@ -2,12 +2,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import Reveal from '@/components/ui/Reveal';
-import SxRoll from '@/components/services/SxRoll';
-import SxIris from '@/components/services/SxIris';
-import SxReel from '@/components/services/SxReel';
-import SxNext from '@/components/services/SxNext';
+import PheroBg from '@/components/ui/PheroBg';
+import SplitHeading from '@/components/ui/SplitHeading';
+import Photo from '@/components/ui/Photo';
 import { services } from '@/data/services';
-import '@/components/services/sx.css';
 
 export function generateStaticParams() {
   return services.map(({ slug }) => ({ slug }));
@@ -19,6 +17,13 @@ export function generateMetadata({ params }) {
   return { title: service.title, description: service.short };
 }
 
+const assurance = [
+  ['Written brief', 'Goals and constraints agreed before design.'],
+  ['Reviewable work', 'Open a staging link as the build takes shape.'],
+  ['Weekly updates', 'Know what is moving and what comes next.'],
+  ['After-launch support', 'Monitoring and support continue after go-live.'],
+];
+
 export default function ServiceDetailPage({ params }) {
   const index = services.findIndex(({ slug }) => slug === params.slug);
   if (index === -1) notFound();
@@ -28,63 +33,90 @@ export default function ServiceDetailPage({ params }) {
   const next = services[(index + 1) % services.length];
 
   return (
-    <div className={`sx-page sx-service-page sx-service-page-${index + 1}`}>
-      <section className="sx-dhero" aria-labelledby="service-title" data-service-index={number}>
-        <div className="container sx-dhero-grid">
-          <div className="sx-dhero-copy">
-            <div className="sx-crumbs">
+    <>
+      <section className="phero sdetail-hero">
+        <PheroBg src={`/images/office/o0${(index % 9) + 1}.jpg`} />
+        <div className="container">
+          <div className="phero-top">
+            <p className="crumbs">
               <Link href="/services">Services</Link>
               <span aria-hidden="true">/</span>
               <span>{service.group}</span>
-              <span className="sx-crumbs-count">{number} / {String(services.length).padStart(2, '0')}</span>
-            </div>
-            <SxRoll as="h1" text={service.title} className="sx-dhero-title" />
-            <Reveal delay={0.9} y={18}>
-              <p className="sx-dhero-summary">{service.short}</p>
-              <p className="sx-dhero-long">{service.long}</p>
-              <div className="sx-dhero-actions">
+            </p>
+            <span className="phero-index">{number} / {String(services.length).padStart(2, '0')}</span>
+          </div>
+          <SplitHeading as="h1" lines={[service.title]} immediate delay={0.1} className="h-xl" />
+          <div className="sdetail-grid">
+            <Reveal delay={0.35} y={24}>
+              <p className="sdetail-short">{service.short}</p>
+              <p className="lead">{service.long}</p>
+              <div className="sdetail-actions">
                 <Button href={`/contact?service=${encodeURIComponent(service.title)}`}>Discuss this service</Button>
-                <Link href={`/services/${next.slug}`} className="sx-textlink">
-                  <span>Next: {next.title}</span>
-                  <i aria-hidden="true" />
-                </Link>
+                <Link href={`/services/${next.slug}`} className="textlink">Next: {next.title} <span aria-hidden="true">→</span></Link>
               </div>
             </Reveal>
+            <div className="sdetail-photo">
+              <Photo seed={service.slug} alt={service.title} />
+            </div>
           </div>
-          <SxIris seed={service.slug} group={service.group} title={service.title} index={number} />
         </div>
       </section>
 
-      <section className="sx-assurance" aria-labelledby="sx-assurance-title">
-        <div className="container sx-assurance-inner">
-          <h2 id="sx-assurance-title">Clear process.<br />Visible progress.</h2>
-          <ul className="sx-assurance-list">
-            <Reveal as="li" delay={0.04} y={16}><span>01</span><div><h3>Written brief</h3><p>Goals and constraints agreed before design.</p></div></Reveal>
-            <Reveal as="li" delay={0.12} y={16}><span>02</span><div><h3>Reviewable work</h3><p>Open a staging link as the build takes shape.</p></div></Reveal>
-            <Reveal as="li" delay={0.2} y={16}><span>03</span><div><h3>Weekly updates</h3><p>Know what is moving and what comes next.</p></div></Reveal>
-            <Reveal as="li" delay={0.28} y={16}><span>04</span><div><h3>After-launch support</h3><p>Monitoring and support continue after go-live.</p></div></Reveal>
+      <section className="section sdetail-features">
+        <div className="container">
+          <div className="sec-head">
+            <div>
+              <p className="kicker">What this makes possible</p>
+              <SplitHeading lines={['Possible deliverables,', 'scoped around you.']} italicLines={[1]} className="h-lg" />
+            </div>
+          </div>
+          <ol className="flist">
+            {service.features.map((f, i) => (
+              <Reveal as="li" key={f} delay={i * 0.05} y={24}>
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                <strong>{f}</strong>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="section sdetail-assure">
+        <div className="container">
+          <div className="sec-head">
+            <div>
+              <p className="kicker kicker-inv">How we work</p>
+              <SplitHeading lines={['Clear process.', 'Visible progress.']} italicLines={[1]} className="h-lg" />
+            </div>
+          </div>
+          <ul className="assure-grid">
+            {assurance.map(([t, d], i) => (
+              <Reveal as="li" key={t} delay={i * 0.06} y={24}>
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </Reveal>
+            ))}
           </ul>
         </div>
       </section>
 
-      <section className="sx-stack-band" aria-label="Tools and platforms">
-        <div className="container sx-stack-inner">
-          <p>TOOLS &amp; PLATFORMS</p>
-          <ul>{service.stack.map((item) => <li key={item}>{item}</li>)}</ul>
-        </div>
-      </section>
-
-      <section className="sx-features">
+      <section className="section sdetail-stack" aria-label="Tools and platforms">
         <div className="container">
-          <div className="sx-section-head">
-            <h2>What this makes possible</h2>
-            <p>Possible deliverables, scoped around your goals and the way your team works.</p>
-          </div>
-          <SxReel features={service.features} />
+          <p className="kicker">Tools &amp; platforms</p>
+          <ul className="chips">
+            {service.stack.map((item) => <li key={item}>{item}</li>)}
+          </ul>
         </div>
       </section>
 
-      <SxNext service={next} />
-    </div>
+      <div className="container">
+        <Link href={`/services/${next.slug}`} className="next-block" data-cursor-label="Next">
+          <span>Next service</span>
+          <strong>{next.title}</strong>
+          <i aria-hidden="true">→</i>
+        </Link>
+      </div>
+    </>
   );
 }

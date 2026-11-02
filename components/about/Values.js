@@ -11,26 +11,29 @@ const values = [
 
 export default function Values() {
   return (
-    <section className="section">
-      <div className="container about-values">
-        <div className="about-values-heading">
-          <SplitHeading lines={['Small by design.', 'Serious about craft.']} italicLines={[1]} className="h2" />
-          <p className="muted">A few principles shape every decision we make and every partnership we take on.</p>
+    <section className="section values">
+      <div className="container">
+        <div className="why-head">
+          <div>
+            <p className="kicker">Principles</p>
+            <SplitHeading lines={['Small by design.', 'Serious about craft.']} italicLines={[1]} className="h-lg" />
+          </div>
+          <p className="lead">A few principles shape every decision we make and every partnership we take on.</p>
         </div>
-        <div className="values">
+        <div className="why-grid">
           {values.map((v, i) => (
             <motion.div
-              className="value"
+              className="why-card"
               key={v.t}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-              transition={{ duration: 0.8, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.8, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="value-index">{String(i + 1).padStart(2, '0')}</span>
+              <span className="why-no">{String(i + 1).padStart(2, '0')}</span>
               <h3>{v.t}</h3>
               <p>{v.d}</p>
-              <span className="value-mark" aria-hidden="true">↗</span>
+              <span className="why-arrow" aria-hidden="true">↗</span>
             </motion.div>
           ))}
         </div>

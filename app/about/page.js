@@ -1,6 +1,7 @@
 import AboutIntro from '@/components/about/AboutIntro';
 import Values from '@/components/about/Values';
-import StackBand from '@/components/about/StackBand';
+import Process from '@/components/home/Process';
+import ToolsBand from '@/components/home/ToolsBand';
 
 export const metadata = {
   title: 'About',
@@ -12,7 +13,8 @@ export default function AboutPage() {
     <>
       <AboutIntro />
       <Values />
-      <StackBand />
+      <Process tone="dark" />
+      <ToolsBand />
     </>
   );
 }
