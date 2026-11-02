@@ -11,7 +11,6 @@ export default function Insights() {
       <div className="container">
         <div className="sec-head">
           <div>
-            <p className="kicker">Insights</p>
             <SplitHeading lines={['Ideas for your', 'next good move.']} italicLines={[1]} className="h-lg" />
           </div>
           <Button href="/blog" variant="line">Visit blog</Button>

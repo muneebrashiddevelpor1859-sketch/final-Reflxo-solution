@@ -23,7 +23,6 @@ export default function HomePage() {
         <div className="container">
           <div className="sec-head">
             <div>
-              <p className="kicker">Services</p>
               <SplitHeading lines={['Everything your', 'brand needs online.']} italicLines={[1]} className="h-lg" />
             </div>
             <Button href="/services" variant="line">All services</Button>

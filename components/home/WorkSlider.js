@@ -57,7 +57,6 @@ export default function WorkSlider() {
       <div className="container">
         <div className="sec-head">
           <div>
-            <p className="kicker kicker-inv">Selected work</p>
             <SplitHeading lines={['Work that earns', 'its place.']} italicLines={[1]} className="h-lg" />
           </div>
           <Button href="/portfolio" variant="inv">See full portfolio</Button>

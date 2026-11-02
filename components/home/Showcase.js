@@ -9,7 +9,6 @@ export default function Showcase() {
     <FixedMedia className="showcase" image="/images/office/o07.jpg" veil="fx-veil" aria-label="Why teams choose us">
       <div className="container showcase-in">
         <div className="showcase-copy">
-          <p className="kicker">Built to last</p>
           <SplitHeading lines={['Design that feels', 'considered. Code that', 'stays out of the way.']} italicLines={[2]} className="showcase-quote" />
           <Reveal delay={0.2}>
             <p className="lead">Every page is designed, built and tested by the same small team, so the finished product feels like one thought, not a stack of hand-offs.</p>

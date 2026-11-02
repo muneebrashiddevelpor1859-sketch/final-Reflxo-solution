@@ -14,7 +14,6 @@ export default function WhyUs() {
       <div className="container">
         <div className="why-head">
           <div>
-            <p className="kicker">Why Reflexo</p>
             <SplitHeading lines={['Small team.', 'Senior attention.']} italicLines={[1]} className="h-lg" />
           </div>
           <p className="lead">Fewer projects, closer work. The people you talk to are the people who build it.</p>

@@ -14,7 +14,6 @@ export default function Approach() {
     <section className="section approach">
       <div className="container approach-grid">
         <div className="approach-intro">
-          <p className="kicker">Our approach</p>
           <SplitHeading lines={['From first call', 'to launch.']} italicLines={[1]} className="h-lg" />
           <p className="lead">One focused team, a shared plan, and no surprises between the first conversation and launch.</p>
         </div>

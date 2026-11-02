@@ -9,7 +9,6 @@ export default function Intro() {
   return (
     <section className="section intro" id="intro">
       <div className="container">
-        <p className="kicker">What we do</p>
         <ScrollText className="intro-text" text="Good digital work starts with the problem, not the platform. First we get clear on what needs to change, then we design and build what helps." />
         <Reveal className="intro-cta">
           <Button href="/about" variant="line">Meet the studio</Button>

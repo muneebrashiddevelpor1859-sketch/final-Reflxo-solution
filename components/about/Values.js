@@ -15,7 +15,6 @@ export default function Values() {
       <div className="container">
         <div className="why-head">
           <div>
-            <p className="kicker">Principles</p>
             <SplitHeading lines={['Small by design.', 'Serious about craft.']} italicLines={[1]} className="h-lg" />
           </div>
           <p className="lead">A few principles shape every decision we make and every partnership we take on.</p>

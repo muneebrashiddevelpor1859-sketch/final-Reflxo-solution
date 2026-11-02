@@ -66,7 +66,6 @@ export default function ServiceDetailPage({ params }) {
         <div className="container">
           <div className="sec-head">
             <div>
-              <p className="kicker">What this makes possible</p>
               <SplitHeading lines={['Possible deliverables,', 'scoped around you.']} italicLines={[1]} className="h-lg" />
             </div>
           </div>
@@ -85,7 +84,6 @@ export default function ServiceDetailPage({ params }) {
         <div className="container">
           <div className="sec-head">
             <div>
-              <p className="kicker kicker-inv">How we work</p>
               <SplitHeading lines={['Clear process.', 'Visible progress.']} italicLines={[1]} className="h-lg" />
             </div>
           </div>

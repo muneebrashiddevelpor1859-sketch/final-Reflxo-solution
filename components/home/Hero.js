@@ -29,13 +29,11 @@ export default function Hero() {
   return (
     <FixedMedia className="hero" video="/videos/reel-office.mp4" veil="fx-veil">
       <div className="container hero-main">
-        <motion.p className="hero-tag" initial={{ opacity: 0, y: 12 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
-          <span className="dot" aria-hidden="true" /> Web · Brand · AI &mdash; working worldwide
-        </motion.p>
+       
 
         <h1 className="hero-title" aria-label="Digital systems, designed with intent.">
           <span className="hl" aria-hidden="true">
-            <motion.span className="hl-in" custom={0} variants={line} initial="hide" animate={state}>Digital systems,</motion.span>
+            <motion.span className="hl-in" custom={0} variants={line} initial="hide" animate={state}>Digital systems</motion.span>
           </span>
           <span className="hl" aria-hidden="true">
             <motion.span className="hl-in" custom={1} variants={line} initial="hide" animate={state}>
