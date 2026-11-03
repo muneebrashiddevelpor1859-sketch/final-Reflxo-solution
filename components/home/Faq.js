@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SplitHeading from '../ui/SplitHeading';
+import Reveal from '../ui/Reveal';
+import Button from '../ui/Button';
 
 const faqs = [
   { q: 'What does Reflexo Solutions specialise in?', a: 'Web design and development is our core, supported by SEO, paid advertising, AI automation, AI agents, branding and short-form video. We bring in each of these only when it makes sense for your business.' },
@@ -14,34 +16,44 @@ const faqs = [
 export default function Faq() {
   const [open, setOpen] = useState(0);
   return (
-    <section className="section faq">
-      <div className="container faq-grid">
-        <div>
+    <section className="section rx-faq">
+      <div className="container rx-faq-grid">
+        <div className="rx-faq-side">
+          <p className="kicker">FAQ</p>
           <SplitHeading lines={['A few things people', 'usually ask.']} italicLines={[1]} className="h-lg" />
+          <Reveal delay={0.15} className="rx-faq-card">
+            <strong>Still have a question?</strong>
+            <span>Tell us what you are working on. We reply within 24 hours.</span>
+            <Button href="/contact" variant="solid">Ask the team</Button>
+          </Reveal>
         </div>
-        <ul className="faq-list">
-          {faqs.map((f, i) => (
-            <li key={f.q} className={open === i ? 'is-open' : ''}>
-              <button type="button" onClick={() => setOpen(open === i ? -1 : i)} aria-expanded={open === i}>
-                <span>{f.q}</span>
-                <i aria-hidden="true" />
-              </button>
-              <AnimatePresence initial={false}>
-                {open === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ overflow: 'hidden' }}
-                  >
-                    <p>{f.a}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </li>
-          ))}
-        </ul>
+
+        <Reveal dir="right">
+          <ul className="rx-faq-list">
+            {faqs.map((f, i) => (
+              <li key={f.q} className={open === i ? 'is-open' : ''}>
+                <button type="button" onClick={() => setOpen(open === i ? -1 : i)} aria-expanded={open === i}>
+                  <span className="rx-faq-n">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="rx-faq-q">{f.q}</span>
+                  <i aria-hidden="true" />
+                </button>
+                <AnimatePresence initial={false}>
+                  {open === i && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <p>{f.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

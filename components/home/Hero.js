@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../ui/Button';
+import Counter from '../ui/Counter';
 import FixedMedia from '../ui/FixedMedia';
 import { stats } from '@/data/site';
 
@@ -10,7 +11,6 @@ const line = {
   show: (i) => ({ y: '0%', transition: { duration: 1.05, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] } }),
 };
 
-// Full-screen hero: a video that stays fixed while the page scrolls over it, under a soft pearl veil.
 export default function Hero() {
   const [ready, setReady] = useState(false);
 
@@ -27,59 +27,65 @@ export default function Hero() {
   const state = ready ? 'show' : 'hide';
 
   return (
-    <FixedMedia className="hero" video="/videos/reel-office.mp4" veil="fx-veil">
+    <FixedMedia
+      className="hero"
+      video="/videos/agency-studio.mp4"
+      poster="/videos/agency-studio-poster.jpg"
+      veil="fx-veil-full"
+      glow={false}
+    >
       <div className="container hero-main">
-       
+        <div className="hero-copy">
+          <h1 className="hero-title" aria-label="Digital systems, designed with intent.">
+            <span className="hl" aria-hidden="true">
+              <motion.span className="hl-in" custom={0} variants={line} initial="hide" animate={state}>Digital systems,</motion.span>
+            </span>
+            <span className="hl" aria-hidden="true">
+              <motion.span className="hl-in is-dim" custom={1} variants={line} initial="hide" animate={state}>designed with intent.</motion.span>
+            </span>
+          </h1>
 
-        <h1 className="hero-title" aria-label="Digital systems, designed with intent.">
-          <span className="hl" aria-hidden="true">
-            <motion.span className="hl-in" custom={0} variants={line} initial="hide" animate={state}>Digital systems</motion.span>
-          </span>
-          <span className="hl" aria-hidden="true">
-            <motion.span className="hl-in" custom={1} variants={line} initial="hide" animate={state}>
-              designed
-              <span className="hero-pill">
-                <video autoPlay muted loop playsInline preload="metadata" poster="/videos/hero-poster.jpg">
-                  <source src="/videos/hero-office.mp4" type="video/mp4" />
-                </video>
-              </span>
-            </motion.span>
-          </span>
-          <span className="hl" aria-hidden="true">
-            <motion.span className="hl-in is-dim" custom={2} variants={line} initial="hide" animate={state}>with intent.</motion.span>
-          </span>
-        </h1>
+          <motion.div
+            className="hero-row"
+            initial={{ opacity: 0, y: 24 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="hero-lead">
+              We are a small, senior studio designing and building websites, brands and AI automation for companies ready to move beyond the ordinary.
+            </p>
+            <div className="hero-actions">
+              <Button href="/contact" variant="solid">Start a project</Button>
+              <Button href="/services" variant="line">What we do</Button>
+            </div>
+          </motion.div>
+        </div>
+      </div>
 
-        <motion.div className="hero-row" initial={{ opacity: 0, y: 24 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}>
-          <p className="hero-lead">
-            We are a small, senior studio designing and building websites, brands and AI automation for companies ready to move beyond the ordinary.
-          </p>
-          <div className="hero-actions">
-            <Button href="/contact" variant="solid">Start a project</Button>
-            <Button href="/services" variant="line">What we do</Button>
+      <div className="container hero-bottom">
+        <motion.div
+          className="hero-stats"
+          initial={{ opacity: 0, y: 20 }}
+          animate={ready ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="hero-stats-heading">
+            <span><i aria-hidden="true" /> Reflexo at a glance</span>
+            <span>Small studio. Serious outcomes.</span>
           </div>
+          <ul className="hero-bar">
+            {stats.map((st) => (
+              <li key={st.label}>
+                <strong><Counter to={st.value} suffix={st.suffix} duration={1.8} /></strong>
+                <span>{st.label}</span>
+              </li>
+            ))}
+          </ul>
         </motion.div>
-
+        <a href="#intro" className="hero-scroll" data-cursor-label="Scroll">
+          <span>Scroll to explore</span><i aria-hidden="true">↓</i>
+        </a>
       </div>
-
-      <div className="container hero-bar-wrap">
-        <motion.ul className="hero-bar" initial={{ opacity: 0, y: 30 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}>
-          {stats.map((st) => (
-            <li key={st.label}>
-              <strong>{st.value}{st.suffix}</strong>
-              <span>{st.label}</span>
-            </li>
-          ))}
-        </motion.ul>
-      </div>
-
-      <a href="#intro" className="hero-badge" aria-label="Scroll down" data-cursor-label="Scroll">
-        <svg viewBox="0 0 120 120" aria-hidden="true">
-          <defs><path id="hb" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs>
-          <text><textPath href="#hb" textLength="268" lengthAdjust="spacing">Scroll down · Scroll down · Scroll down · </textPath></text>
-        </svg>
-        <i aria-hidden="true">↓</i>
-      </a>
     </FixedMedia>
   );
 }

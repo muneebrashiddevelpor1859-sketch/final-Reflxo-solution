@@ -24,6 +24,7 @@ export default function ProjectCard({ project, index = 0 }) {
           <span className="pcard-year">{project.year}</span>
         </div>
         <p className="pcard-sum">{project.summary}</p>
+        <span className="pcard-open">Explore case study <span aria-hidden="true">↗</span></span>
       </Link>
     </motion.div>
   );

@@ -1,5 +1,6 @@
 import Reveal from '../ui/Reveal';
 import SplitHeading from '../ui/SplitHeading';
+import Button from '../ui/Button';
 
 const cards = [
   { t: 'Design and code, one team', d: 'No hand-offs between agencies. The person who designs a screen also cares how it is built.' },
@@ -8,23 +9,28 @@ const cards = [
   { t: 'AI with a human in charge', d: 'Agents handle the repetitive part and hand over to a real person whenever it matters.' },
 ];
 
+// Sticky intro on the left, cards that slide in from the right.
 export default function WhyUs() {
   return (
-    <section className="section why">
-      <div className="container">
-        <div className="why-head">
-          <div>
-            <SplitHeading lines={['Small team.', 'Senior attention.']} italicLines={[1]} className="h-lg" />
-          </div>
+    <section className="section rx-why">
+      <div className="container rx-why-grid">
+        <div className="rx-why-side">
+          <p className="kicker">Why Reflexo</p>
+          <SplitHeading lines={['Small team.', 'Senior attention.']} italicLines={[1]} className="h-lg" />
           <p className="lead">Fewer projects, closer work. The people you talk to are the people who build it.</p>
+          <Reveal delay={0.15}>
+            <Button href="/contact" variant="line">Talk to the team</Button>
+          </Reveal>
         </div>
-        <div className="why-grid">
+
+        <div className="rx-why-list">
           {cards.map((c, i) => (
-            <Reveal key={c.t} delay={(i % 2) * 0.08} y={40} className="why-card">
-              <span className="why-no">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{c.t}</h3>
-              <p>{c.d}</p>
-              <span className="why-arrow" aria-hidden="true">↗</span>
+            <Reveal key={c.t} dir="right" delay={(i % 2) * 0.08} className="rx-why-card">
+              <span className="rx-why-no">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{c.t}</h3>
+                <p>{c.d}</p>
+              </div>
             </Reveal>
           ))}
         </div>

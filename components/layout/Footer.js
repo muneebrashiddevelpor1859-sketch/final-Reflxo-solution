@@ -27,7 +27,7 @@ export default function Footer() {
 
   return (
     <>
-      <FixedMedia className="cta-band" video="/videos/5725951-uhd_3840_2160_30fps.mp4" veil="fx-veil-full" aria-label="Start a project">
+      <FixedMedia className="cta-band rx-round" video="/videos/5725951-uhd_3840_2160_30fps.mp4" veil="fx-veil-black" aria-label="Start a project">
         <div className="container">
           <p className="kicker">Time to stop scrolling</p>
           <SplitHeading lines={['Have a product to', 'build or rethink?']} italicLines={[1]} className="h-xl" />

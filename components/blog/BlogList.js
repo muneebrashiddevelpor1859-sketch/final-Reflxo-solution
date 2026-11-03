@@ -8,11 +8,20 @@ export default function BlogList() {
   const [first, ...rest] = posts;
   return (
     <section className="container journal">
+      <div className="journal-heading">
+        <div>
+          <p className="kicker">From the journal</p>
+          <h2 className="h-lg">Ideas worth your time.</h2>
+        </div>
+        <p className="journal-count"><strong>{String(posts.length).padStart(2, '0')}</strong> articles</p>
+      </div>
+
       <Reveal y={50}>
         <article className="jfeature">
           <Link href={`/blog/${first.slug}`} className="jfeature-media" data-cursor-label="Read">
             <Cover title={first.title} hue={first.hue} image={first.image} />
             <span className="jfeature-stamp">Featured</span>
+            <span className="jfeature-arrow" aria-hidden="true">↗</span>
           </Link>
           <div className="jfeature-copy">
             <div className="post-meta">
@@ -30,20 +39,23 @@ export default function BlogList() {
       <div className="jlist">
         {rest.map((post, i) => (
           <Reveal key={post.slug} delay={i * 0.05} y={28}>
-            <Link className="jrow" href={`/blog/${post.slug}`} data-cursor-label="Read">
-              <span className="jrow-no">{String(i + 2).padStart(2, '0')}</span>
-              <div className="jrow-media"><Cover title={post.title} hue={post.hue} image={post.image} /></div>
-              <div className="jrow-copy">
-                <div className="post-meta">
-                  <span>{post.category}</span>
-                  <span>{fmtDate(post.date)}</span>
-                  <span>{post.read} read</span>
+            <article className="jcard">
+              <Link className="jcard-link" href={`/blog/${post.slug}`} data-cursor-label="Read">
+                <div className="jcard-media">
+                  <Cover title={post.title} hue={post.hue} image={post.image} />
+                  <span className="jcard-arrow" aria-hidden="true">↗</span>
                 </div>
-                <h3>{post.title}</h3>
-                <p>{post.excerpt}</p>
-              </div>
-              <span className="jrow-arrow" aria-hidden="true">↗</span>
-            </Link>
+                <div className="jcard-copy">
+                  <div className="post-meta">
+                    <span>{post.category}</span>
+                    <span>{fmtDate(post.date)}</span>
+                    <span>{post.read} read</span>
+                  </div>
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt}</p>
+                </div>
+              </Link>
+            </article>
           </Reveal>
         ))}
       </div>

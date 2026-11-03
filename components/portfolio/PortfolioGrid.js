@@ -10,10 +10,19 @@ export default function PortfolioGrid() {
 
   return (
     <section className="container portfolio">
+      <div className="portfolio-heading">
+        <div>
+          <p className="kicker">Selected work</p>
+          <h2 className="h-lg">Built to make a difference.</h2>
+        </div>
+        <p className="portfolio-count"><strong>{String(list.length).padStart(2, '0')}</strong> projects</p>
+      </div>
+
       <div className="tabs" role="tablist" aria-label="Filter projects">
         {categories.map((c) => (
           <button key={c} role="tab" aria-selected={active === c} className={`tab${active === c ? ' is-active' : ''}`} onClick={() => setActive(c)}>
             {c}
+            <sup>{c === 'All' ? projects.length : projects.filter((project) => project.category === c).length}</sup>
           </button>
         ))}
       </div>

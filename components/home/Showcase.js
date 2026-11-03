@@ -6,7 +6,7 @@ import Button from '../ui/Button';
 // Mid-page band: the picture stays fixed while the content glides over it.
 export default function Showcase() {
   return (
-    <FixedMedia className="showcase" image="/images/office/o07.jpg" veil="fx-veil" aria-label="Why teams choose us">
+    <FixedMedia className="showcase rx-dark rx-round" image="/images/office/o07.jpg" veil="fx-veil-black" aria-label="Why teams choose us">
       <div className="container showcase-in">
         <div className="showcase-copy">
           <SplitHeading lines={['Design that feels', 'considered. Code that', 'stays out of the way.']} italicLines={[2]} className="showcase-quote" />

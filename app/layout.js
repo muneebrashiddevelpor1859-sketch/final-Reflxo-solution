@@ -1,6 +1,7 @@
 import '@fontsource-variable/plus-jakarta-sans';
 import '@fontsource-variable/cormorant-garamond';
 import './globals.css';
+import './home.css';
 import SmoothScroll from '@/components/layout/SmoothScroll';
 import Preloader from '@/components/layout/Preloader';
 import Cursor from '@/components/layout/Cursor';

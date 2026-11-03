@@ -10,6 +10,7 @@ export default function BlogPage() {
   return (
     <>
       <PageHero
+        className="blog-hero"
         kicker="Blog"
         lines={['Ideas for your', 'next good move.']}
         italicLines={[1]}
