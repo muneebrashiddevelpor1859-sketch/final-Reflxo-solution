@@ -11,7 +11,7 @@ export default function BlogPage() {
     <>
       <PageHero
         className="blog-hero"
-        kicker="Blog"
+        
         lines={['Ideas for your', 'next good move.']}
         italicLines={[1]}
         text="Clear thinking on digital strategy, design and technology, and the small details that make a difference."

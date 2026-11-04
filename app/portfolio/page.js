@@ -11,7 +11,7 @@ export default function PortfolioPage() {
     <>
       <PageHero
         className="portfolio-hero"
-        kicker="Portfolio"
+      
         lines={['Work that earns', 'its place.']}
         italicLines={[1]}
         text="A selection of recent projects. Open any of them for the full case study: the problem, what we built and the result."

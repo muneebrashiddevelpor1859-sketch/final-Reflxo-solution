@@ -19,7 +19,6 @@ export default function Faq() {
     <section className="section rx-faq">
       <div className="container rx-faq-grid">
         <div className="rx-faq-side">
-          <p className="kicker">FAQ</p>
           <SplitHeading lines={['A few things people', 'usually ask.']} italicLines={[1]} className="h-lg" />
           <Reveal delay={0.15} className="rx-faq-card">
             <strong>Still have a question?</strong>

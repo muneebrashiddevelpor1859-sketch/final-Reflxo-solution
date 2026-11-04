@@ -15,7 +15,6 @@ export default function WhyUs() {
     <section className="section rx-why">
       <div className="container rx-why-grid">
         <div className="rx-why-side">
-          <p className="kicker">Why Reflexo</p>
           <SplitHeading lines={['Small team.', 'Senior attention.']} italicLines={[1]} className="h-lg" />
           <p className="lead">Fewer projects, closer work. The people you talk to are the people who build it.</p>
           <Reveal delay={0.15}>

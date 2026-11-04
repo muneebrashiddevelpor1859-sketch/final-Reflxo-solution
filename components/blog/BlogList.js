@@ -10,7 +10,6 @@ export default function BlogList() {
     <section className="container journal">
       <div className="journal-heading">
         <div>
-          <p className="kicker">From the journal</p>
           <h2 className="h-lg">Ideas worth your time.</h2>
         </div>
         <p className="journal-count"><strong>{String(posts.length).padStart(2, '0')}</strong> articles</p>

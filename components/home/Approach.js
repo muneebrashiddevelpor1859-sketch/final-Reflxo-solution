@@ -42,7 +42,6 @@ export default function Approach() {
       <div className="container">
         <div className="sec-head">
           <div>
-            <p className="kicker">How we work</p>
             <SplitHeading lines={['From first call', 'to launch.']} italicLines={[1]} className="h-lg" />
           </div>
           <p className="lead">One focused team, a shared plan, and no surprises between the first conversation and launch.</p>

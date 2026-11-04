@@ -10,10 +10,7 @@ export default function AboutIntro() {
       <section className="phero about-hero">
         <PheroBg src="/images/office/o09.jpg" />
         <div className="container">
-          <div className="phero-top">
-            <p className="kicker">About the studio</p>
-            <span className="phero-index">Independent · Working worldwide</span>
-          </div>
+         
           <SplitHeading as="h1" lines={['We ask first.', 'Then we make.']} italicLines={[1]} immediate delay={0.1} className="h-xl" />
           <Reveal delay={0.4} y={20}>
             <div className="about-hero-row">

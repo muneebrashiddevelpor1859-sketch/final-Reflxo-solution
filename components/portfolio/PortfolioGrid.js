@@ -12,7 +12,6 @@ export default function PortfolioGrid() {
     <section className="container portfolio">
       <div className="portfolio-heading">
         <div>
-          <p className="kicker">Selected work</p>
           <h2 className="h-lg">Built to make a difference.</h2>
         </div>
         <p className="portfolio-count"><strong>{String(list.length).padStart(2, '0')}</strong> projects</p>

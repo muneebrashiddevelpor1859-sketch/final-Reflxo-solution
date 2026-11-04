@@ -13,7 +13,6 @@ export default function WorkBento() {
       <div className="container">
         <div className="sec-head">
           <div>
-            <p className="kicker">Selected work</p>
             <SplitHeading lines={['Work that earns', 'its place.']} italicLines={[1]} className="h-lg" />
           </div>
           <Button href="/portfolio" variant="solid">See full portfolio</Button>
