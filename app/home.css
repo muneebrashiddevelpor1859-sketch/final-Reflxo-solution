@@ -182,6 +182,25 @@
   .rx-faq-list li > div p { padding: 0 0 1.4rem; }
 }
 
+@media (max-width: 560px) {
+  .rx-round { clip-path: inset(0 round 20px 20px 0 0); margin-top: -20px; }
+  .rx-svc, .rx-process { padding-block: 4.5rem; }
+  .rx-pan { min-height: 78px; border-radius: 16px; }
+  .rx-pan.is-on { min-height: 360px; }
+  .rx-pan-in { padding: 1rem; }
+  .rx-bento { gap: 0.75rem; }
+  .rx-cell { min-height: 280px; }
+  .rx-pj { border-radius: 18px; }
+  .rx-pj-no { left: 1rem; top: 0.9rem; }
+  .rx-pj-go { right: 0.9rem; top: 0.85rem; width: 38px; height: 38px; }
+  .rx-pj-info { padding: 1rem; }
+  .rx-why-grid, .rx-faq-grid { gap: 1.6rem; }
+  .rx-why-card { gap: 0.8rem 1rem; padding: 1.2rem; }
+  .rx-post-body { padding: 1.1rem; }
+  .rx-faq-list button { grid-template-columns: 1.6rem minmax(0, 1fr) 2rem; gap: 0.75rem; }
+  .rx-faq-list i { width: 28px; height: 28px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rx-pan, .rx-pan-bg, .rx-pan-more, .rx-pj-media, .rx-post, .rx-why-card { transition: none; }
 }
